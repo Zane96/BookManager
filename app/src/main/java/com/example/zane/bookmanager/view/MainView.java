@@ -1,8 +1,10 @@
 package com.example.zane.bookmanager.view;
 
+
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -10,8 +12,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 
 import com.example.zane.bookmanager.R;
+import com.example.zane.bookmanager.presenters.MainFragment;
 import com.example.zane.easymvp.view.BaseViewImpl;
 
 import butterknife.Bind;
@@ -19,13 +23,9 @@ import butterknife.Bind;
 /**
  * Created by Zane on 16/2/14.
  */
-public class MainView extends BaseViewImpl implements NavigationView.OnNavigationItemSelectedListener{
-
-
+public class MainView extends BaseViewImpl implements NavigationView.OnNavigationItemSelectedListener {
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.fab)
-    FloatingActionButton fab;
     @Bind(R.id.nav_view)
     NavigationView navView;
     @Bind(R.id.drawer_layout)
@@ -36,15 +36,15 @@ public class MainView extends BaseViewImpl implements NavigationView.OnNavigatio
         return R.layout.activity_main;
     }
 
-    public void init(AppCompatActivity context){
+    public void init(AppCompatActivity context, MainFragment fragment) {
+
+        //初始fragment
+        FragmentTransaction transaction = context.getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_replace, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+
         context.setSupportActionBar(toolbar);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                                                                         context, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);

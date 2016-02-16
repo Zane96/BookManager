@@ -9,14 +9,13 @@ import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.zane.bookmanager.R;
 import com.example.zane.bookmanager.app.MyApplication;
+import com.example.zane.bookmanager.inject.component.ActivityComponent;
 import com.example.zane.bookmanager.inject.component.DaggerActivityComponent;
 import com.example.zane.bookmanager.inject.module.ActivityModule;
 import com.example.zane.bookmanager.model.bean.Book;
@@ -37,6 +36,8 @@ public class MainActivity extends BaseActivityPresenter<MainView> {
     public static final String ISBN = "ISBN";
     public static final String BOOK_INFO = "BOOKINFO";
     private String isbn;
+    private MainFragment mainFragment;
+    private ActivityComponent activityComponent;
 
     @Inject
     DataManager datamanager;
@@ -49,54 +50,62 @@ public class MainActivity extends BaseActivityPresenter<MainView> {
     @Override
     public void inCreat(Bundle bundle) {
         v.initView();
-        v.init(this);
+        mainFragment = MainFragment.newInstance();
+        v.init(this, mainFragment);
         initInject();
 
-        v.setOnClickListener(new View.OnClickListener() {
+        mainFragment.setScannerButtonListener(new MainFragment.OnScannerButtonListener() {
             @Override
-            public void onClick(View v) {
+            public void onScannerButtonClick() {
                 startActivityForResult(new Intent(MainActivity.this, ZxingScannerActivity.class)
-                , requestCode);
+                                              , requestCode);
             }
-        }, R.id.button_scnnar);
+        });
     }
 
     public void initInject(){
         MyApplication app = MyApplication.getApplicationContext2();
-        DaggerActivityComponent.builder()
+        activityComponent = DaggerActivityComponent.builder()
                 .activityModule(new ActivityModule(this))
                 .applicationComponent(app.getAppComponent())
-                .build()
-                .inject(this);
+                .build();
+        activityComponent.inject(this);
+    }
+
+    public ActivityComponent getActivityComponent(){
+        return activityComponent;
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        isbn = data.getStringExtra(ISBN);
+        if (data != null) {
+            isbn = data.getStringExtra(ISBN);
 
-        // TODO: 16/2/14
-        datamanager.getBookInfo(isbn)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<Book>() {
-                    @Override
-                    public void onCompleted() {
+            datamanager.getBookInfo(isbn)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(new Observer<Book>() {
+                        @Override
+                        public void onCompleted() {
 
-                    }
+                        }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.i("MainActivity2", String.valueOf(e));
-                    }
+                        @Override
+                        public void onError(Throwable e) {
+                            Log.i("MainActivity2", String.valueOf(e));
+                        }
 
-                    @Override
-                    public void onNext(Book book) {
-                        ExUtils.ToastLong(String.valueOf(book));
-                        Intent intent = new Intent(MainActivity.this, BookInfoActivity.class);
-                        intent.putExtra(BOOK_INFO, book);
-                        startActivity(intent);
-                    }
-                });
+                        @Override
+                        public void onNext(Book book) {
+                            ExUtils.ToastLong(String.valueOf(book));
+                            Intent intent = new Intent(MainActivity.this, BookInfoActivity.class);
+                            intent.putExtra(BOOK_INFO, book);
+                            startActivity(intent);
+                        }
+                    });
+        }else {
+            return;
+        }
     }
 
     @Override
