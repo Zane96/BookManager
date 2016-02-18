@@ -2,11 +2,7 @@ package com.example.zane.bookmanager.presenters;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
-import android.view.View;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 
@@ -20,6 +16,9 @@ import com.example.zane.bookmanager.inject.component.DaggerActivityComponent;
 import com.example.zane.bookmanager.inject.module.ActivityModule;
 import com.example.zane.bookmanager.model.bean.Book;
 import com.example.zane.bookmanager.model.data.DataManager;
+import com.example.zane.bookmanager.presenters.activity.BookInfoActivity;
+import com.example.zane.bookmanager.presenters.activity.ZxingScannerActivity;
+import com.example.zane.bookmanager.presenters.fragment.MainFragment;
 import com.example.zane.bookmanager.view.MainView;
 import com.example.zane.easymvp.presenter.BaseActivityPresenter;
 import com.kermit.exutils.utils.ExUtils;
@@ -79,8 +78,9 @@ public class MainActivity extends BaseActivityPresenter<MainView> {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (data != null) {
-            isbn = data.getStringExtra(ISBN);
 
+            isbn = data.getStringExtra(ISBN);
+            ExUtils.Toast(isbn);
             datamanager.getBookInfo(isbn)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
@@ -110,7 +110,6 @@ public class MainActivity extends BaseActivityPresenter<MainView> {
 
     @Override
     public void inDestory() {
-        v.removeView();
     }
 
     @Override

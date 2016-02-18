@@ -1,9 +1,8 @@
 package com.example.zane.bookmanager.inject.component;
 
 import com.example.zane.bookmanager.inject.module.FragmentModule;
-import com.example.zane.bookmanager.inject.scope.ActivityLife;
 import com.example.zane.bookmanager.inject.scope.FragmentLife;
-import com.example.zane.bookmanager.presenters.MainFragment;
+import com.example.zane.bookmanager.presenters.fragment.MainFragment;
 
 import dagger.Component;
 

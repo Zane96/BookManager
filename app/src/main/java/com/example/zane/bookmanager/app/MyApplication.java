@@ -8,6 +8,8 @@ import com.example.zane.bookmanager.inject.module.ApplicationModule;
 import com.example.zane.bookmanager.inject.module.DoubanBookModule;
 import com.kermit.exutils.utils.ExUtils;
 
+import org.litepal.LitePalApplication;
+
 /**
  * Created by Zane on 16/2/14.
  */
@@ -21,6 +23,7 @@ public class MyApplication extends Application{
         super.onCreate();
         application = this;
         ExUtils.initialize(this);
+        LitePalApplication.initialize(this);
     }
 
     public ApplicationComponent getAppComponent(){

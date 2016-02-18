@@ -1,9 +1,8 @@
 package com.example.zane.bookmanager.view;
 
 
-import android.support.design.widget.FloatingActionButton;
+import android.content.Context;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -11,11 +10,10 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.FrameLayout;
 
 import com.example.zane.bookmanager.R;
-import com.example.zane.bookmanager.presenters.MainFragment;
+import com.example.zane.bookmanager.presenters.fragment.MainFragment;
+import com.example.zane.bookmanager.presenters.fragment.MyBookInfoFragment;
 import com.example.zane.easymvp.view.BaseViewImpl;
 
 import butterknife.Bind;
@@ -31,6 +29,8 @@ public class MainView extends BaseViewImpl implements NavigationView.OnNavigatio
     @Bind(R.id.drawer_layout)
     DrawerLayout drawer;
 
+    public AppCompatActivity context;
+
     @Override
     public int getRootViewId() {
         return R.layout.activity_main;
@@ -38,10 +38,10 @@ public class MainView extends BaseViewImpl implements NavigationView.OnNavigatio
 
     public void init(AppCompatActivity context, MainFragment fragment) {
 
+        this.context = context;
         //初始fragment
         FragmentTransaction transaction = context.getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_replace, fragment);
-        transaction.addToBackStack(null);
         transaction.commit();
 
         context.setSupportActionBar(toolbar);
@@ -60,7 +60,11 @@ public class MainView extends BaseViewImpl implements NavigationView.OnNavigatio
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            // Handle the camera action
+            // TODO: 16/2/17
+            FragmentTransaction transaction = context.getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_replace, MyBookInfoFragment.newInstance());
+            transaction.addToBackStack(null);
+            transaction.commit();
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
