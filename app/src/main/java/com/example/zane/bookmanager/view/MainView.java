@@ -36,7 +36,7 @@ public class MainView extends BaseViewImpl implements NavigationView.OnNavigatio
         return R.layout.activity_main;
     }
 
-    public void init(AppCompatActivity context, MainFragment fragment) {
+    public void init(AppCompatActivity context, MyBookInfoFragment fragment) {
 
         this.context = context;
         //初始fragment
@@ -46,12 +46,25 @@ public class MainView extends BaseViewImpl implements NavigationView.OnNavigatio
 
         context.setSupportActionBar(toolbar);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                                                                        context, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(context, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
         navView.setNavigationItemSelectedListener(this);
+    }
+
+    public void transToAddBookFragment(){
+        FragmentTransaction transaction = context.getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_replace, MainFragment.newInstance());
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    public void transToMyBookInfoFragment(){
+        FragmentTransaction transaction = context.getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_replace, MyBookInfoFragment.newInstance());
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     @Override
@@ -60,11 +73,7 @@ public class MainView extends BaseViewImpl implements NavigationView.OnNavigatio
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            // TODO: 16/2/17
-            FragmentTransaction transaction = context.getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragment_replace, MyBookInfoFragment.newInstance());
-            transaction.addToBackStack(null);
-            transaction.commit();
+
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {

@@ -1,6 +1,6 @@
 package com.example.zane.bookmanager.view;
 
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -17,6 +17,8 @@ public class MyBookInfoView extends BaseViewImpl {
 
     @Bind(R.id.recyclerview_mybookinfo_fragment)
     RecyclerView recyclerviewMybookinfoFragment;
+    @Bind(R.id.fab_mybookinfo_fragment)
+    FloatingActionButton fabMybookinfoFragment;
 
 
     @Override
@@ -24,7 +26,7 @@ public class MyBookInfoView extends BaseViewImpl {
         return R.layout.fragment_mybookinfo_layout;
     }
 
-    public void initRecycleView(LinearLayoutManager manager, MyBookInfoAdapter adapter){
+    public void initRecycleView(LinearLayoutManager manager, MyBookInfoAdapter adapter) {
         recyclerviewMybookinfoFragment.setLayoutManager(manager);
         recyclerviewMybookinfoFragment.setAdapter(adapter);
     }

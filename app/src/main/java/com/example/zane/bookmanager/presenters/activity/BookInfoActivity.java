@@ -69,10 +69,13 @@ public class BookInfoActivity extends BaseActivityPresenter<BookInfoView>{
                 book_db.setTitle(book.getTitle());
                 book_db.setUrl(book.getUrl());
                 book_db.setPublisher(book.getPublisher());
+                book_db.setIsbn13(book.getIsbn13());
                 if (book_db.save()){
                     ExUtils.Toast("保存成功!");
+                    finish();
                 } else {
                     ExUtils.Toast("保存失败!");
+                    finish();
                 }
             }
         }, R.id.button_addtodb_bookinfoactivity);

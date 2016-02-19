@@ -19,6 +19,7 @@ import com.example.zane.bookmanager.model.data.DataManager;
 import com.example.zane.bookmanager.presenters.activity.BookInfoActivity;
 import com.example.zane.bookmanager.presenters.activity.ZxingScannerActivity;
 import com.example.zane.bookmanager.presenters.fragment.MainFragment;
+import com.example.zane.bookmanager.presenters.fragment.MyBookInfoFragment;
 import com.example.zane.bookmanager.view.MainView;
 import com.example.zane.easymvp.presenter.BaseActivityPresenter;
 import com.kermit.exutils.utils.ExUtils;
@@ -31,11 +32,12 @@ import rx.schedulers.Schedulers;
 
 public class MainActivity extends BaseActivityPresenter<MainView> {
 
-    public static final int requestCode = 1001;
+    public static final int requestCode_1 = 1001;
+    public static final int requestCode_2 = 1002;
     public static final String ISBN = "ISBN";
     public static final String BOOK_INFO = "BOOKINFO";
     private String isbn;
-    private MainFragment mainFragment;
+    private MyBookInfoFragment myBookInfoFragment;
     private ActivityComponent activityComponent;
 
     @Inject
@@ -49,15 +51,14 @@ public class MainActivity extends BaseActivityPresenter<MainView> {
     @Override
     public void inCreat(Bundle bundle) {
         v.initView();
-        mainFragment = MainFragment.newInstance();
-        v.init(this, mainFragment);
+        myBookInfoFragment = MyBookInfoFragment.newInstance();
+        v.init(this, myBookInfoFragment);
         initInject();
 
-        mainFragment.setScannerButtonListener(new MainFragment.OnScannerButtonListener() {
+        myBookInfoFragment.setAddButtonListener(new MyBookInfoFragment.OnAddButtonListener() {
             @Override
-            public void onScannerButtonClick() {
-                startActivityForResult(new Intent(MainActivity.this, ZxingScannerActivity.class)
-                                              , requestCode);
+            public void onAddButtonClick() {
+                v.transToAddBookFragment();
             }
         });
     }
@@ -78,31 +79,37 @@ public class MainActivity extends BaseActivityPresenter<MainView> {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (data != null) {
+            switch (requestCode) {
+                case requestCode_1:
+                isbn = data.getStringExtra(ISBN);
+                ExUtils.Toast(isbn);
+                datamanager.getBookInfo(isbn)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .subscribe(new Observer<Book>() {
+                            @Override
+                            public void onCompleted() {
 
-            isbn = data.getStringExtra(ISBN);
-            ExUtils.Toast(isbn);
-            datamanager.getBookInfo(isbn)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
-                    .subscribe(new Observer<Book>() {
-                        @Override
-                        public void onCompleted() {
+                            }
 
-                        }
+                            @Override
+                            public void onError(Throwable e) {
+                                Log.i("MainActivity2", String.valueOf(e));
+                            }
 
-                        @Override
-                        public void onError(Throwable e) {
-                            Log.i("MainActivity2", String.valueOf(e));
-                        }
+                            @Override
+                            public void onNext(Book book) {
+                                ExUtils.ToastLong(String.valueOf(book));
+                                Intent intent = new Intent(MainActivity.this, BookInfoActivity.class);
+                                intent.putExtra(BOOK_INFO, book);
+                                startActivity(intent);
+                            }
+                        });
+                    break;
+                case requestCode_2:
 
-                        @Override
-                        public void onNext(Book book) {
-                            ExUtils.ToastLong(String.valueOf(book));
-                            Intent intent = new Intent(MainActivity.this, BookInfoActivity.class);
-                            intent.putExtra(BOOK_INFO, book);
-                            startActivity(intent);
-                        }
-                    });
+                    break;
+            }
         }else {
             return;
         }

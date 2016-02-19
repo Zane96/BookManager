@@ -22,6 +22,15 @@ public class Book_DB extends DataSupport implements Serializable{
     private String price;
     private String author;
     private String publisher;
+    private String isbn13;
+
+    public String getIsbn13() {
+        return isbn13;
+    }
+
+    public void setIsbn13(String isbn13) {
+        this.isbn13 = isbn13;
+    }
 
     public String getPublisher() {
         return publisher;

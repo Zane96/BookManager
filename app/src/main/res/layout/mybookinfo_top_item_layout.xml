@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:background="@color/white"
+              android:layout_width="match_parent"
+              android:layout_height="80dp">
+    
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/edit_checkbook"
+        android:background="@drawable/checkbook_edittext_bg"
+        android:hint="搜索"
+        android:textColorHint="@color/gray"
+        android:textColor="@color/gray"
+        android:padding="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/select"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="书名排序"
+            android:textColor="@color/gray"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:id="@+id/sortbook_name"
+            />
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/gray"  />
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="时间排序"
+            android:textColor="@color/gray"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:id="@+id/sortbook_date"
+            />
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray"  />
+
+</LinearLayout>

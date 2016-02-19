@@ -1,5 +1,6 @@
 package com.example.zane.bookmanager.presenters.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -8,6 +9,7 @@ import com.example.zane.bookmanager.inject.component.DaggerFragmentComponent;
 import com.example.zane.bookmanager.inject.module.FragmentModule;
 import com.example.zane.bookmanager.model.bean.Book_DB;
 import com.example.zane.bookmanager.presenters.MainActivity;
+import com.example.zane.bookmanager.presenters.activity.ZxingScannerActivity;
 import com.example.zane.bookmanager.view.MainFragmentView;
 import com.example.zane.easymvp.presenter.BaseFragmentPresenter;
 import com.kermit.exutils.utils.ExUtils;
@@ -20,14 +22,7 @@ import org.litepal.crud.DataSupport;
 public class MainFragment extends BaseFragmentPresenter<MainFragmentView>{
 
     private MainActivity activity;
-    public OnScannerButtonListener scannerButtonListener;
 
-    public interface OnScannerButtonListener{
-        void onScannerButtonClick();
-    }
-    public void setScannerButtonListener(OnScannerButtonListener listener){
-        scannerButtonListener = listener;
-    }
 
     public static MainFragment newInstance(){
         return new MainFragment();
@@ -48,7 +43,9 @@ public class MainFragment extends BaseFragmentPresenter<MainFragmentView>{
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                scannerButtonListener.onScannerButtonClick();
+                getActivity().startActivityForResult(new Intent(getActivity()
+                                                                       , ZxingScannerActivity.class), MainActivity.requestCode_1);
+
             }
         }, R.id.button_scnnar);
 
