@@ -56,14 +56,12 @@ public class MainView extends BaseViewImpl implements NavigationView.OnNavigatio
     public void transToAddBookFragment(){
         FragmentTransaction transaction = context.getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_replace, MainFragment.newInstance());
-        transaction.addToBackStack(null);
         transaction.commit();
     }
 
     public void transToMyBookInfoFragment(){
         FragmentTransaction transaction = context.getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_replace, MyBookInfoFragment.newInstance());
-        transaction.addToBackStack(null);
         transaction.commit();
     }
 
@@ -73,18 +71,20 @@ public class MainView extends BaseViewImpl implements NavigationView.OnNavigatio
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+            transToMyBookInfoFragment();
         }
+
+//        } else if (id == R.id.nav_gallery) {
+//
+//        } else if (id == R.id.nav_slideshow) {
+//
+//        } else if (id == R.id.nav_manage) {
+//
+//        } else if (id == R.id.nav_share) {
+//
+//        } else if (id == R.id.nav_send) {
+//
+//        }
 
         drawer.closeDrawer(GravityCompat.START);
         return true;
