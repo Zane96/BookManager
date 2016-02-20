@@ -37,5 +37,8 @@ public class MyBookInfoTopViewHolder extends BaseListViewHolderImpl<Book_DB>{
     public TextView getTextView_date(){
         return textView_date;
     }
+    public EditText getEditText_checkBook(){
+        return editText;
+    }
 
 }

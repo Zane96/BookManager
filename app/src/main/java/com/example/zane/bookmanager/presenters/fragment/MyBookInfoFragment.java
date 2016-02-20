@@ -3,6 +3,7 @@ package com.example.zane.bookmanager.presenters.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
@@ -29,6 +30,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import rx.Observable;
+import rx.functions.Action1;
+import rx.functions.Func1;
+
 /**
  * Created by Zane on 16/2/16.
  */
@@ -54,12 +59,6 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
         return fragment;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-//        fetchDataByDate();
-//        adapter.notifyDataSetChanged();
-    }
 
     @Override
     public Class<MyBookInfoView> getRootViewClass() {
@@ -73,6 +72,105 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
         initInject();
         fetchDataByDate();
         v.initRecycleView(manager, adapter);
+
+        adapter.setOnCheckBookListener(new MyBookInfoAdapter.OnCheckBookListener() {
+            @Override
+            public void onCheckBook(final String book_name) {
+                if (!TextUtils.isEmpty(book_name)) {
+                    final Map<String, Book_DB> maps = new HashMap<>();
+                    final List<Book_DB> books = new ArrayList<>();
+                    for (int i = 0; i < book_name.length(); i++) {
+                        TextUtils.substring(book_name, 0, i + 1);
+                        final int I = i;
+
+                        Observable.from(myBooks)
+                                .map(new Func1<Book_DB, String>() {
+                                    @Override
+                                    public String call(Book_DB book_db) {
+                                        maps.put(book_db.getAuthor(), book_db);
+                                        return book_db.getAuthor();
+                                    }
+                                })
+                                .filter(new Func1<String, Boolean>() {
+                                    @Override
+                                    public Boolean call(String s) {
+                                        String n = "";
+                                        for (int j = 0; j < s.length() - I; j++) {
+                                            n = TextUtils.substring(s, j, I + j + 1);
+                                            if (n.equals(book_name)) {
+                                                break;
+                                            }
+                                        }
+                                        return n.equals(book_name);
+                                    }
+                                })
+                                .map(new Func1<String, Book_DB>() {
+                                    @Override
+                                    public Book_DB call(String s) {
+                                        return maps.get(s);
+                                    }
+                                })
+                                .subscribe(new Action1<Book_DB>() {
+                                    @Override
+                                    public void call(Book_DB book_db) {
+                                        books.add(book_db);
+                                    }
+                                });
+
+                        Observable.from(myBooks)
+                                .map(new Func1<Book_DB, String>() {
+                                    @Override
+                                    public String call(Book_DB book_db) {
+                                        maps.put(book_db.getTitle(), book_db);
+                                        return book_db.getTitle();
+                                    }
+                                })
+                                .filter(new Func1<String, Boolean>() {
+                                    @Override
+                                    public Boolean call(String s) {
+                                        String n = "";
+                                        for (int j = 0; j < s.length() - I; j++) {
+                                            n = TextUtils.substring(s, j, I + j + 1);
+                                            if (n.equals(book_name)) {
+                                                break;
+                                            }
+                                        }
+                                        return n.equals(book_name);
+                                    }
+                                })
+                                .map(new Func1<String, Book_DB>() {
+                                    @Override
+                                    public Book_DB call(String s) {
+                                        return maps.get(s);
+                                    }
+                                })
+                                .subscribe(new Action1<Book_DB>() {
+                                    @Override
+                                    public void call(Book_DB book_db) {
+                                        books.add(book_db);
+                                    }
+                                });
+                    }
+                    if (books.size() != 0) {
+                        myBooks = books;
+                        adapter.setMyBooks(myBooks);
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        myBooks = new ArrayList<Book_DB>();
+                        adapter.setMyBooks(myBooks);
+                        adapter.notifyDataSetChanged();
+                    }
+                } else {
+                    if (isSortByDate){
+                        fetchDataByDate();
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        fetchFataByName();
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+            }
+        });
 
         v.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,11 +245,13 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
     }
 
     //现在只是在数据库中查询哈
+    //根据扫描时间降序排列
     public void fetchDataByDate(){
         myBooks = DataSupport.order("id desc").find(Book_DB.class);
         adapter.setMyBooks(myBooks);
         isSortByDate = true;
     }
+    //根据书名开头第一个汉字拼音升序排列
     public void fetchFataByName(){
         Map<String, Book_DB> maps = new HashMap<>();
         List<String> bookName = new ArrayList<>();

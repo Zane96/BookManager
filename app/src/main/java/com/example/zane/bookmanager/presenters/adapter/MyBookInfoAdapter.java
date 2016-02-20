@@ -2,9 +2,14 @@ package com.example.zane.bookmanager.presenters.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.zane.bookmanager.R;
 import com.example.zane.bookmanager.model.bean.Book_DB;
@@ -16,6 +21,10 @@ import com.kermit.exutils.utils.ExUtils;
 
 import java.util.List;
 
+import rx.Observable;
+import rx.functions.Action1;
+import rx.functions.Func1;
+
 /**
  * Created by Zane on 16/2/18.
  */
@@ -26,8 +35,19 @@ public class MyBookInfoAdapter extends BaseListAdapterPresenter<Book_DB>{
     private List<Book_DB> myBooks;
     private OnItemClickListener listener;
     private OnSortBookListener onSortBookListener;
+    private OnCheckBookListener onChechListener;
     private TextView textView_name;
     private TextView textView_date;
+    private EditText editText_checkbook;
+    private boolean isNeedFocus = true;
+
+
+    public interface OnCheckBookListener{
+        void onCheckBook(String writeName);
+    }
+    public void setOnCheckBookListener(OnCheckBookListener listener){
+        this.onChechListener = listener;
+    }
 
     public interface OnItemClickListener{
         void onClick(int positon);
@@ -73,6 +93,7 @@ public class MyBookInfoAdapter extends BaseListAdapterPresenter<Book_DB>{
                 MyBookInfoTopViewHolder viewHolder = new MyBookInfoTopViewHolder(viewGroup, R.layout.mybookinfo_top_item_layout);
                 textView_name = viewHolder.getTextView_name();
                 textView_date = viewHolder.getTextView_date();
+                editText_checkbook = viewHolder.getEditText_checkBook();
                 return viewHolder;
             case NORMAL_TYPE:
                 return new MyBookinfoViewHolder(viewGroup, R.layout.mybookinfo_item_layout);
@@ -112,6 +133,31 @@ public class MyBookInfoAdapter extends BaseListAdapterPresenter<Book_DB>{
                     onSortBookListener.onSortByName();
                 }
             });
+            editText_checkbook.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    onChechListener.onCheckBook(editText_checkbook.getText().toString());
+                    isNeedFocus = true;
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                }
+            });
+//            editText_checkbook.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//                @Override
+//                public void onFocusChange(View v, boolean hasFocus) {
+//                    if (hasFocus && isNeedFocus){
+//                        v.requestFocus();
+//                        isNeedFocus = false;
+//                        v.clearFocus();
+//                    }
+//                }
+//            });
         }
     }
 
