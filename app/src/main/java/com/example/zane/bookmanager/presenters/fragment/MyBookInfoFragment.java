@@ -62,6 +62,7 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
     private int checkByWhitch = 1;
     private String bookName = "";
     private Observable<Integer> observable;
+    private Subscriber<Integer> subscriber;
 
 
 
@@ -110,6 +111,8 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
                             checkBookByAll(book_name);
                     }
                 } else {
+                    //如果输入框为空，那么这个也要为空
+                    bookName = "";
                     if (isSortByDate){
                         fetchDataByDate();
                         adapter.notifyDataSetChanged();
@@ -229,7 +232,7 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
             }
         });
 
-        final Subscriber<Integer> subscriber = new Subscriber<Integer>() {
+        subscriber = new Subscriber<Integer>() {
             @Override
             public void onCompleted() {
             }
@@ -243,12 +246,15 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
                 if(bookName != "") {
                     switch (integer) {
                         case 1:
+                            ExUtils.Toast("1"+bookName);
                             checkBookByAll(bookName);
                             break;
                         case 2:
+                            ExUtils.Toast("2"+bookName);
                             checkBookByName(bookName);
                             break;
                         case 3:
+                            ExUtils.Toast("3"+bookName);
                             checkBookByAuthor(bookName);
                             break;
                         default:
@@ -382,8 +388,7 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
             adapter.setMyBooks(myBooks);
             adapter.notifyDataSetChanged();
         } else {
-            myBooks = new ArrayList<Book_DB>();
-            adapter.setMyBooks(myBooks);
+            adapter.setMyBooks(new ArrayList<Book_DB>());
             adapter.notifyDataSetChanged();
         }
     }
@@ -433,8 +438,7 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
             adapter.setMyBooks(myBooks);
             adapter.notifyDataSetChanged();
         } else {
-            myBooks = new ArrayList<Book_DB>();
-            adapter.setMyBooks(myBooks);
+            adapter.setMyBooks(new ArrayList<Book_DB>());
             adapter.notifyDataSetChanged();
         }
     }
@@ -484,8 +488,7 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
             adapter.setMyBooks(myBooks);
             adapter.notifyDataSetChanged();
         } else {
-            myBooks = new ArrayList<Book_DB>();
-            adapter.setMyBooks(myBooks);
+            adapter.setMyBooks(new ArrayList<Book_DB>());
             adapter.notifyDataSetChanged();
         }
     }
@@ -537,5 +540,6 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
     @Override
     public void onDestroy() {
         super.onDestroy();
+        observable.unsafeSubscribe(subscriber);
     }
 }
