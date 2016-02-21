@@ -41,6 +41,7 @@ import java.util.Map;
 import java.util.zip.Inflater;
 
 import rx.Observable;
+import rx.Subscriber;
 import rx.functions.Action1;
 import rx.functions.Func1;
 
@@ -59,6 +60,9 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
     private boolean isSortByDate;
     //1_all, 2_name, 3_author
     private int checkByWhitch = 1;
+    private String bookName = "";
+    private Observable<Integer> observable;
+
 
 
     public interface OnAddButtonListener{
@@ -91,6 +95,7 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
             @Override
             public void onCheckBook(final String book_name) {
                 if (!TextUtils.isEmpty(book_name)) {
+                    bookName = book_name;
                     switch (checkByWhitch){
                         case 1:
                             checkBookByAll(book_name);
@@ -224,10 +229,46 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
             }
         });
 
+        final Subscriber<Integer> subscriber = new Subscriber<Integer>() {
+            @Override
+            public void onCompleted() {
+            }
+
+            @Override
+            public void onError(Throwable e) {
+            }
+
+            @Override
+            public void onNext(Integer integer) {
+                if(bookName != "") {
+                    switch (integer) {
+                        case 1:
+                            checkBookByAll(bookName);
+                            break;
+                        case 2:
+                            checkBookByName(bookName);
+                            break;
+                        case 3:
+                            checkBookByAuthor(bookName);
+                            break;
+                        default:
+                            checkBookByAll(bookName);
+                    }
+                }
+            }
+        };
+
         checkAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 checkByWhitch = 1;
+                observable = Observable.create(new Observable.OnSubscribe<Integer>() {
+                    @Override
+                    public void call(Subscriber<? super Integer> subscriber) {
+                        subscriber.onNext(1);
+                    }
+                });
+                observable.subscribe(subscriber);
                 popupWindow.dismiss();
             }
         });
@@ -235,6 +276,13 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
             @Override
             public void onClick(View v) {
                 checkByWhitch = 2;
+                observable = Observable.create(new Observable.OnSubscribe<Integer>() {
+                    @Override
+                    public void call(Subscriber<? super Integer> subscriber) {
+                        subscriber.onNext(2);
+                    }
+                });
+                observable.subscribe(subscriber);
                 popupWindow.dismiss();
             }
         });
@@ -242,6 +290,13 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
             @Override
             public void onClick(View v) {
                 checkByWhitch = 3;
+                observable = Observable.create(new Observable.OnSubscribe<Integer>() {
+                    @Override
+                    public void call(Subscriber<? super Integer> subscriber) {
+                        subscriber.onNext(3);
+                    }
+                });
+                observable.subscribe(subscriber);
                 popupWindow.dismiss();
             }
         });
