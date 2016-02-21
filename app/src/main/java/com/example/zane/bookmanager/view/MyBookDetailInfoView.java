@@ -1,6 +1,8 @@
 package com.example.zane.bookmanager.view;
 
-import android.widget.Button;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,7 +19,7 @@ import butterknife.Bind;
  */
 public class MyBookDetailInfoView extends BaseViewImpl {
 
-    @Bind(R.id.imageview_mybookdetail_activity)
+    @Bind(R.id.image_mybookdetailinfo_activity)
     ImageView imageviewMybookdetailActivity;
     @Bind(R.id.textview_bookname_mybookdetail)
     TextView textviewBooknameMybookdetail;
@@ -35,6 +37,12 @@ public class MyBookDetailInfoView extends BaseViewImpl {
     TextView textviewAuthorIntroMybookdetail;
     @Bind(R.id.textview_book_intro_mybookdetail)
     TextView textviewBookIntroMybookdetail;
+    @Bind(R.id.toolbar_mybookdetailinfo_activity)
+    Toolbar toolbarMybookdetailinfoActivity;
+    @Bind(R.id.collapsing_toolbar)
+    CollapsingToolbarLayout collapsingToolbar;
+    @Bind(R.id.appbar_detail)
+    AppBarLayout appbarDetail;
 
 
     @Override
@@ -42,37 +50,46 @@ public class MyBookDetailInfoView extends BaseViewImpl {
         return R.layout.activity_mybookdetailinfo_layout;
     }
 
-    public void setBookImage(String url){
+
+    public void setupToolbar(String url, String title) {
+        collapsingToolbar.setTitle(title);
         Glide.with(MyApplication.getApplicationContext2())
                 .load(url)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .placeholder(R.mipmap.ic_launcher)
+                .fitCenter()
                 .error(R.mipmap.ic_launcher)
                 .into(imageviewMybookdetailActivity);
     }
-
-    public void setTextviewBooknameMybookdetail(String bookName){
+    public void setTextviewBooknameMybookdetail(String bookName) {
         textviewBooknameMybookdetail.setText(bookName);
     }
-    public void setTextviewAuthornameMybookdetail(String s){
+
+    public void setTextviewAuthornameMybookdetail(String s) {
         textviewAuthornameMybookdetail.setText(s);
     }
-    public void setTextviewPublishnameMybookdetail(String s){
+
+    public void setTextviewPublishnameMybookdetail(String s) {
         textviewPublishnameMybookdetail.setText(s);
     }
-    public void setTextviewPriceMybookdetail(String s){
+
+    public void setTextviewPriceMybookdetail(String s) {
         textviewPriceMybookdetail.setText(s);
     }
-    public void setTextviewPublishdateMybookdetail(String s){
+
+    public void setTextviewPublishdateMybookdetail(String s) {
         textviewPublishdateMybookdetail.setText(s);
     }
-    public void setTextviewPagesMybookdetail(String s){
+
+    public void setTextviewPagesMybookdetail(String s) {
         textviewPagesMybookdetail.setText(s);
     }
-    public void setTextviewAuthorIntroMybookdetail(String s){
+
+    public void setTextviewAuthorIntroMybookdetail(String s) {
         textviewAuthorIntroMybookdetail.setText(s);
     }
-    public void setTextviewBookIntroMybookdetail(String s){
+
+    public void setTextviewBookIntroMybookdetail(String s) {
         textviewBookIntroMybookdetail.setText(s);
     }
 }

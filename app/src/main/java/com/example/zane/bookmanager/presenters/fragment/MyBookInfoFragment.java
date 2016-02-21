@@ -246,15 +246,12 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
                 if(bookName != "") {
                     switch (integer) {
                         case 1:
-                            ExUtils.Toast("1"+bookName);
                             checkBookByAll(bookName);
                             break;
                         case 2:
-                            ExUtils.Toast("2"+bookName);
                             checkBookByName(bookName);
                             break;
                         case 3:
-                            ExUtils.Toast("3"+bookName);
                             checkBookByAuthor(bookName);
                             break;
                         default:
@@ -540,6 +537,6 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
     @Override
     public void onDestroy() {
         super.onDestroy();
-        observable.unsafeSubscribe(subscriber);
+
     }
 }
