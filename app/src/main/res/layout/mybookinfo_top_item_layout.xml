@@ -5,15 +5,57 @@
               android:layout_width="match_parent"
               android:layout_height="80dp">
     
-    <EditText
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:id="@+id/edit_checkbook"
-        android:background="@drawable/checkbook_edittext_bg"
-        android:hint="搜索"
-        android:textColorHint="@color/gray"
-        android:textColor="@color/gray"
-        android:padding="10dp"/>
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:id="@+id/checkchoose"
+            android:src="@drawable/check"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/check_choose_bg"
+            android:paddingLeft="4dp"
+            />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <EditText
+                android:layout_weight="9"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:id="@+id/edit_checkbook"
+                android:background="@drawable/checkbook_edittext_bg"
+                android:hint="搜索"
+                android:textColorHint="@color/gray"
+                android:textColor="@color/gray"
+                android:padding="4dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"/>
+
+            <ImageButton
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:id="@+id/checkdelet"
+                android:src="@drawable/choosedelet"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/check_delet_bg"
+                android:paddingRight="4dp"
+                android:layout_toRightOf="@id/edit_checkbook"
+                />
+        </LinearLayout>
+
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

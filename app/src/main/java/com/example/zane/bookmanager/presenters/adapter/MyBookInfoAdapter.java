@@ -1,15 +1,13 @@
 package com.example.zane.bookmanager.presenters.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.zane.bookmanager.R;
 import com.example.zane.bookmanager.model.bean.Book_DB;
@@ -17,13 +15,8 @@ import com.example.zane.bookmanager.view.MyBookInfoTopViewHolder;
 import com.example.zane.bookmanager.view.MyBookinfoViewHolder;
 import com.example.zane.easymvp.presenter.BaseListAdapterPresenter;
 import com.example.zane.easymvp.view.BaseListViewHolderImpl;
-import com.kermit.exutils.utils.ExUtils;
 
 import java.util.List;
-
-import rx.Observable;
-import rx.functions.Action1;
-import rx.functions.Func1;
 
 /**
  * Created by Zane on 16/2/18.
@@ -35,18 +28,20 @@ public class MyBookInfoAdapter extends BaseListAdapterPresenter<Book_DB>{
     private List<Book_DB> myBooks;
     private OnItemClickListener listener;
     private OnSortBookListener onSortBookListener;
-    private OnCheckBookListener onChechListener;
-    private TextView textView_name;
-    private TextView textView_date;
+    private OnCheckBookListener onCheckListener;
     private EditText editText_checkbook;
-    private boolean isNeedFocus = true;
+    private ImageButton checkChoose;
+    private ImageButton checkDelet;
+    private TextView sortByName;
+    private TextView sortByDate;
 
 
     public interface OnCheckBookListener{
         void onCheckBook(String writeName);
+        void onCheckChoose(View v);
     }
     public void setOnCheckBookListener(OnCheckBookListener listener){
-        this.onChechListener = listener;
+        this.onCheckListener = listener;
     }
 
     public interface OnItemClickListener{
@@ -91,9 +86,11 @@ public class MyBookInfoAdapter extends BaseListAdapterPresenter<Book_DB>{
         switch (i){
             case TOP_TYPE:
                 MyBookInfoTopViewHolder viewHolder = new MyBookInfoTopViewHolder(viewGroup, R.layout.mybookinfo_top_item_layout);
-                textView_name = viewHolder.getTextView_name();
-                textView_date = viewHolder.getTextView_date();
                 editText_checkbook = viewHolder.getEditText_checkBook();
+                checkChoose = viewHolder.getCheckChoose();
+                checkDelet = viewHolder.getCheckDelet();
+                sortByDate = viewHolder.getTextView_date();
+                sortByName = viewHolder.getTextView_name();
                 return viewHolder;
             case NORMAL_TYPE:
                 return new MyBookinfoViewHolder(viewGroup, R.layout.mybookinfo_item_layout);
@@ -103,7 +100,7 @@ public class MyBookInfoAdapter extends BaseListAdapterPresenter<Book_DB>{
     }
 
     @Override
-    public void onBindViewHolder(BaseListViewHolderImpl holder, final int position) {
+    public void onBindViewHolder(final BaseListViewHolderImpl holder, final int position) {
         if (position != 0){
             holder.setData(myBooks.get(position-1));
 
@@ -121,18 +118,34 @@ public class MyBookInfoAdapter extends BaseListAdapterPresenter<Book_DB>{
                 }
             });
         } else {
-            textView_date.setOnClickListener(new View.OnClickListener() {
+            checkChoose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onCheckListener.onCheckChoose(v);
+                }
+            });
+
+            checkDelet.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    editText_checkbook.setText("");
+                }
+            });
+
+            sortByDate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     onSortBookListener.onSortByDate();
                 }
             });
-            textView_name.setOnClickListener(new View.OnClickListener() {
+
+            sortByName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     onSortBookListener.onSortByName();
                 }
             });
+
             editText_checkbook.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -140,8 +153,7 @@ public class MyBookInfoAdapter extends BaseListAdapterPresenter<Book_DB>{
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    onChechListener.onCheckBook(editText_checkbook.getText().toString());
-                    isNeedFocus = true;
+                    onCheckListener.onCheckBook(editText_checkbook.getText().toString());
                 }
 
                 @Override

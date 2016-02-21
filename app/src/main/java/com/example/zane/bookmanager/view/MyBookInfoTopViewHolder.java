@@ -1,7 +1,9 @@
 package com.example.zane.bookmanager.view;
 
+import android.media.Image;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.zane.bookmanager.R;
@@ -16,6 +18,8 @@ public class MyBookInfoTopViewHolder extends BaseListViewHolderImpl<Book_DB>{
     public EditText editText;
     public TextView textView_name;
     public TextView textView_date;
+    public ImageButton checkChoose;
+    public ImageButton checkDelet;
 
     public MyBookInfoTopViewHolder(ViewGroup parent, int res) {
         super(parent, res);
@@ -26,6 +30,8 @@ public class MyBookInfoTopViewHolder extends BaseListViewHolderImpl<Book_DB>{
         editText = $(R.id.edit_checkbook);
         textView_date = $(R.id.sortbook_date);
         textView_name = $(R.id.sortbook_name);
+        checkChoose = $(R.id.checkchoose);
+        checkDelet = $(R.id.checkdelet);
     }
 
     @Override
@@ -39,6 +45,10 @@ public class MyBookInfoTopViewHolder extends BaseListViewHolderImpl<Book_DB>{
     }
     public EditText getEditText_checkBook(){
         return editText;
+    }
+    public ImageButton getCheckChoose(){return checkChoose;}
+    public ImageButton getCheckDelet(){
+        return checkDelet;
     }
 
 }
