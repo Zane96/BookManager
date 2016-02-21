@@ -5,6 +5,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -47,6 +48,8 @@ import rx.functions.Func1;
  * Created by Zane on 16/2/16.
  */
 public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
+
+    public static final String TAG = "MyBookInfoFragment";
 
     private LinearLayoutManager manager;
     private List<Book_DB> myBooks;
@@ -118,12 +121,11 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
             }
         });
 
-
-
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ExUtils.Toast("点击");
+                Log.i(TAG, String.valueOf(scannerButtonListener));
                 scannerButtonListener.onAddButtonClick();
             }
         }, R.id.fab_mybookinfo_fragment);

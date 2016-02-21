@@ -30,6 +30,7 @@ public class MainView extends BaseViewImpl implements NavigationView.OnNavigatio
     DrawerLayout drawer;
 
     public AppCompatActivity context;
+    private MyBookInfoFragment fragment;
 
     @Override
     public int getRootViewId() {
@@ -39,6 +40,7 @@ public class MainView extends BaseViewImpl implements NavigationView.OnNavigatio
     public void init(AppCompatActivity context, MyBookInfoFragment fragment) {
 
         this.context = context;
+        this.fragment = fragment;
         //初始fragment
         FragmentTransaction transaction = context.getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_replace, fragment);
@@ -61,7 +63,7 @@ public class MainView extends BaseViewImpl implements NavigationView.OnNavigatio
 
     public void transToMyBookInfoFragment(){
         FragmentTransaction transaction = context.getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_replace, MyBookInfoFragment.newInstance());
+        transaction.replace(R.id.fragment_replace, fragment);
         transaction.commit();
     }
 
