@@ -160,16 +160,6 @@ public class MyBookInfoAdapter extends BaseListAdapterPresenter<Book_DB>{
                 public void afterTextChanged(Editable s) {
                 }
             });
-//            editText_checkbook.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//                @Override
-//                public void onFocusChange(View v, boolean hasFocus) {
-//                    if (hasFocus && isNeedFocus){
-//                        v.requestFocus();
-//                        isNeedFocus = false;
-//                        v.clearFocus();
-//                    }
-//                }
-//            });
         }
     }
 

@@ -8,4 +8,6 @@ public class DoubanAPI {
 
     public static final String bookApi = "https://api.douban.com/v2/book/isbn/";
 
+    public static final String bookRecomApi = "https://api.douban.com/v2/book/";
+
 }

@@ -155,6 +155,7 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
             @Override
             public void onClick(int position) {
                 Intent intent = new Intent(getActivity(), MyBookDetailInfoActivity.class);
+                intent.putExtra(MainActivity.TAG, MainActivity.TAG);
                 intent.putExtra(BOOK_DB, myBooks.get(position));
                 getActivity().startActivity(intent);
             }

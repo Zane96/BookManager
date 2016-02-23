@@ -384,6 +384,7 @@ android:fitsSystemWindows="true">
     app:layout_anchorGravity="bottom|right|end"
     android:src="@drawable/ic_menu_send"
     android:layout_margin="16dp"
+    android:id="@+id/fab_mydetialbookinfo_activity"
     android:clickable="true"/>
 
 </android.support.design.widget.CoordinatorLayout>

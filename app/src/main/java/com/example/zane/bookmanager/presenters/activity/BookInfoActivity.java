@@ -3,6 +3,7 @@ package com.example.zane.bookmanager.presenters.activity;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 
@@ -29,6 +30,8 @@ import rx.functions.Action1;
 public class BookInfoActivity extends BaseActivityPresenter<BookInfoView>{
 
     private Book book;
+    private Toolbar toolbar;
+
 
     @Override
     public Class<BookInfoView> getRootViewClass() {
@@ -37,48 +40,79 @@ public class BookInfoActivity extends BaseActivityPresenter<BookInfoView>{
 
     @Override
     public void inCreat(Bundle bundle) {
+
         book = (Book)getIntent().getSerializableExtra(MainActivity.BOOK_INFO);
         initInject();
 
-        v.setBookImage(book.getImages().getLarge(), MyApplication.getApplicationContext2());
-        v.setBookInfo(book.getTitle(), book.getAuthor(), book.getPublisher(), book.getPrice());
-
-        //存储图书数据到数据库
-        v.setOnClickListener(new View.OnClickListener() {
+        toolbar = v.get(R.id.toolbar_bookinfo_activity);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Book_DB book_db = new Book_DB();
-
-                final StringBuilder builder = new StringBuilder();
-                Observable.from(book.getAuthor())
-                        .subscribe(new Action1<String>() {
-                            @Override
-                            public void call(String s) {
-                                builder.append(s).append(". ");
-                            }
-                        });
-
-                book_db.setAuthor(builder.toString());
-                book_db.setAuthor_intro(book.getAuthor_intro());
-                book_db.setImage(book.getImages().getLarge());
-                book_db.setPages(book.getPages());
-                book_db.setPrice(book.getPrice());
-                book_db.setPubdate(book.getPubdate());
-                book_db.setSubtitle(book.getSubtitle());
-                book_db.setSummary(book.getSummary());
-                book_db.setTitle(book.getTitle());
-                book_db.setUrl(book.getUrl());
-                book_db.setPublisher(book.getPublisher());
-                book_db.setIsbn13(book.getIsbn13());
-                if (book_db.save()){
-                    ExUtils.Toast("保存成功!");
-                    finish();
-                } else {
-                    ExUtils.Toast("保存失败!");
-                    finish();
-                }
+                finish();
             }
-        }, R.id.button_addtodb_bookinfoactivity);
+        });
+
+        v.setupToolbar(book.getImages().getLarge());
+        v.setBookInfo(book.getTitle(), book.getAuthor(), book.getPublisher(), book.getPrice());
+
+        //存储图书数据到数据库,并且保证现在是从mainactivity跳转而来
+            v.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Book_DB book_db = new Book_DB();
+
+                    final StringBuilder builder = new StringBuilder();
+                    Observable.from(book.getAuthor())
+                            .subscribe(new Action1<String>() {
+                                @Override
+                                public void call(String s) {
+                                    builder.append(s).append(". ");
+                                }
+                            });
+
+                    book_db.setAuthor(builder.toString());
+                    book_db.setAuthor_intro(book.getAuthor_intro());
+                    book_db.setImage(book.getImages().getLarge());
+                    book_db.setPages(book.getPages());
+                    book_db.setPrice(book.getPrice());
+                    book_db.setPubdate(book.getPubdate());
+                    book_db.setSubtitle(book.getSubtitle());
+                    book_db.setSummary(book.getSummary());
+                    book_db.setTitle(book.getTitle());
+                    book_db.setUrl(book.getUrl());
+                    book_db.setPublisher(book.getPublisher());
+                    book_db.setIsbn13(book.getIsbn13());
+                    if (book.getTags().size() >= 3) {
+                        book_db.setTag1(book.getTags().get(0).getName());
+                        book_db.setTag2(book.getTags().get(1).getName());
+                        book_db.setTag3(book.getTags().get(2).getName());
+                    } else {
+                        switch (book.getTags().size()) {
+                            case 0:
+                                break;
+                            case 1:
+                                book_db.setTag1(book.getTags().get(0).getName());
+                                break;
+                            case 2:
+                                book_db.setTag1(book.getTags().get(0).getName());
+                                book_db.setTag2(book.getTags().get(1).getName());
+                                break;
+                        }
+                    }
+
+                    if (book_db.save()) {
+                        ExUtils.Toast("保存成功!");
+                        finish();
+                    } else {
+                        ExUtils.Toast("保存失败!");
+                        finish();
+                    }
+                }
+            }, R.id.button_addtodb_bookinfoactivity);
+
     }
 
     public void initInject(){

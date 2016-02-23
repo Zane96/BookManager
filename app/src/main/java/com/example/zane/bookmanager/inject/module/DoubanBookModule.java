@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.example.zane.bookmanager.config.DoubanAPI;
 import com.example.zane.bookmanager.model.data.remote.DoubanBookService;
+import com.example.zane.bookmanager.model.data.remote.DoubanRecommendBookService;
 import com.example.zane.bookmanager.utils.FileUtils2;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.Interceptor;
@@ -68,6 +69,23 @@ public class DoubanBookModule {
                                     .build();
 
         return retrofit.create(DoubanBookService.class);
+
+    }
+    @Provides
+    DoubanRecommendBookService providesDoubanRecommendBookService(Interceptor interceptor, Cache cache){
+
+        OkHttpClient client = new OkHttpClient();
+        client.networkInterceptors().add(interceptor);
+        client.setCache(cache);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                                    .baseUrl(DoubanAPI.bookRecomApi)
+                                    .client(client)
+                                    .addConverterFactory(GsonConverterFactory.create())
+                                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                                    .build();
+
+        return retrofit.create(DoubanRecommendBookService.class);
 
     }
 

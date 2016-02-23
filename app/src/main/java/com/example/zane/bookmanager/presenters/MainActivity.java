@@ -36,6 +36,7 @@ public class MainActivity extends BaseActivityPresenter<MainView> {
     public static final int requestCode_2 = 1002;
     public static final String ISBN = "ISBN";
     public static final String BOOK_INFO = "BOOKINFO";
+    public static final String TAG = "MainActivity";
     private String isbn;
     private MyBookInfoFragment myBookInfoFragment;
     private ActivityComponent activityComponent;
@@ -50,7 +51,6 @@ public class MainActivity extends BaseActivityPresenter<MainView> {
 
     @Override
     public void inCreat(Bundle bundle) {
-        v.initView();
         myBookInfoFragment = MyBookInfoFragment.newInstance();
         v.init(this, myBookInfoFragment);
         initInject();

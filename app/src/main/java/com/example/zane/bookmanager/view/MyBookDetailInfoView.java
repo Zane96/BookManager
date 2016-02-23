@@ -2,6 +2,7 @@ package com.example.zane.bookmanager.view;
 
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -43,6 +44,8 @@ public class MyBookDetailInfoView extends BaseViewImpl {
     CollapsingToolbarLayout collapsingToolbar;
     @Bind(R.id.appbar_detail)
     AppBarLayout appbarDetail;
+    @Bind(R.id.fab_mydetialbookinfo_activity)
+    FloatingActionButton fabMydetialbookinfoActivity;
 
 
     @Override
@@ -61,6 +64,7 @@ public class MyBookDetailInfoView extends BaseViewImpl {
                 .error(R.mipmap.ic_launcher)
                 .into(imageviewMybookdetailActivity);
     }
+
     public void setTextviewBooknameMybookdetail(String bookName) {
         textviewBooknameMybookdetail.setText(bookName);
     }
