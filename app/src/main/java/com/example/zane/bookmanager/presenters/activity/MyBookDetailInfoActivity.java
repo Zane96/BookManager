@@ -1,9 +1,11 @@
 package com.example.zane.bookmanager.presenters.activity;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.zane.bookmanager.R;
 import com.example.zane.bookmanager.app.MyApplication;
@@ -19,6 +21,8 @@ import com.example.zane.bookmanager.view.MyBookDetailInfoView;
 import com.example.zane.easymvp.presenter.BaseActivityPresenter;
 import com.github.clans.fab.FloatingActionButton;
 import com.kermit.exutils.utils.ExUtils;
+
+import org.litepal.crud.DataSupport;
 
 import javax.inject.Inject;
 
@@ -84,6 +88,19 @@ public class MyBookDetailInfoActivity extends BaseActivityPresenter<MyBookDetail
                     intent.putExtra(BOOKDB, book);
                     startActivity(intent);
                     v.clodeMenu();
+                }
+            });
+
+            // TODO: 16/3/8 添加到我的阅读计划和添加到想要读书的fab点击监听
+            FloatingActionButton fab_read = v.getFab_addto_read();
+            fab_read.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v1) {
+                    ContentValues values = new ContentValues();
+                    values.put("readSituation", getResources().getString(R.string.reading));
+                    DataSupport.update(Book_DB.class, values, book.getId());
+                    v.clodeMenu();
+                    Toast.makeText(MyBookDetailInfoActivity.this, "添加成功！～", Toast.LENGTH_SHORT).show();
                 }
             });
 

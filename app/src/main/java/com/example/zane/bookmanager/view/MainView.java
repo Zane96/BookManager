@@ -72,7 +72,7 @@ public class MainView extends BaseViewImpl implements NavigationView.OnNavigatio
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.my_all_book) {
             transToMyBookInfoFragment();
         }
 

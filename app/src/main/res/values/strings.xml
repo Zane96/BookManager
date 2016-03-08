@@ -6,4 +6,7 @@
 
     <string name="action_settings">Settings</string>
     <string name="choose">请选择</string>
+
+    <string name="reading">在读</string>
+    <string name="want_read">想读</string>
 </resources>

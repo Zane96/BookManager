@@ -20,6 +20,7 @@ public class MyBookinfoViewHolder extends BaseListViewHolderImpl<Book_DB>{
     private ImageView bookImage;
     private TextView bookName;
     private TextView authorName;
+    private TextView read_situation;
 
     public MyBookinfoViewHolder(ViewGroup parent, int res) {
         super(parent, res);
@@ -30,6 +31,7 @@ public class MyBookinfoViewHolder extends BaseListViewHolderImpl<Book_DB>{
         bookImage = $(R.id.item_img);
         bookName = $(R.id.item_bookname);
         authorName = $(R.id.item_authorname);
+        read_situation = $(R.id.item_read_situation);
     }
 
     @Override
@@ -43,5 +45,8 @@ public class MyBookinfoViewHolder extends BaseListViewHolderImpl<Book_DB>{
 
         bookName.setText(book.getTitle());
         authorName.setText(book.getAuthor());
+        if (book.getReadSituation() != null){
+            read_situation.setText(book.getReadSituation());
+        }
     }
 }

@@ -3,9 +3,17 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/my_all_book"
             android:icon="@drawable/ic_menu_camera"
             android:title="我的书单"/>
+        <item
+            android:id="@+id/my_reading_book"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="阅读计划"/>
+        <item
+            android:id="@+id/my_want_read_book"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="想读书单"/>
         <!--<item-->
             <!--android:id="@+id/nav_gallery"-->
             <!--android:icon="@drawable/ic_menu_gallery"-->

@@ -54,6 +54,8 @@ public class MyBookDetailInfoView extends BaseViewImpl {
     NestedScrollView nestedscrollviewMydetailbook;
 
     private FloatingActionButton fab_checkRecommendedBook;
+    private FloatingActionButton fab_addto_read;
+    private FloatingActionButton fab_addwant_to_read;
 
 
     @Override
@@ -113,6 +115,18 @@ public class MyBookDetailInfoView extends BaseViewImpl {
         fab_checkRecommendedBook.setLabelText("查看相关书籍");
         fab_checkRecommendedBook.setImageResource(R.drawable.ic_menu_send);
         fabmenuDownMybookinfoFragment.addMenuButton(fab_checkRecommendedBook);
+
+        fab_addto_read = new FloatingActionButton(MyApplication.getApplicationContext2());
+        fab_addto_read.setButtonSize(FloatingActionButton.SIZE_MINI);
+        fab_addto_read.setLabelText("添加到阅读计划");
+        fab_addto_read.setImageResource(R.drawable.ic_menu_send);
+        fabmenuDownMybookinfoFragment.addMenuButton(fab_addto_read);
+
+        fab_addwant_to_read = new FloatingActionButton(MyApplication.getApplicationContext2());
+        fab_addwant_to_read.setButtonSize(FloatingActionButton.SIZE_MINI);
+        fab_addwant_to_read.setLabelText("添加到想读书单");
+        fab_addwant_to_read.setImageResource(R.drawable.ic_menu_send);
+        fabmenuDownMybookinfoFragment.addMenuButton(fab_addwant_to_read);
     }
 
     public void clodeMenu() {
@@ -123,9 +137,9 @@ public class MyBookDetailInfoView extends BaseViewImpl {
         nestedscrollviewMydetailbook.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if (scrollY > oldScrollY){
+                if (scrollY > oldScrollY) {
                     fabmenuDownMybookinfoFragment.hideMenu(true);
-                } else if(scrollY < oldScrollY){
+                } else if (scrollY < oldScrollY) {
                     fabmenuDownMybookinfoFragment.showMenu(true);
                 }
             }
@@ -135,5 +149,11 @@ public class MyBookDetailInfoView extends BaseViewImpl {
     //好像如果java代码添加控件的话，只能通过函数把控件暴露出去，不能用view的set方法！这点怎么解决？
     public FloatingActionButton getFab_checkRecommendedBook() {
         return fab_checkRecommendedBook;
+    }
+    public FloatingActionButton getFab_addto_read(){
+        return fab_addto_read;
+    }
+    public FloatingActionButton getFab_addwant_to_read(){
+        return fab_addwant_to_read;
     }
 }

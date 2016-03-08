@@ -4,11 +4,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="110dp"
     android:layout_width="match_parent"
-    android:layout_margin="2dp"
+    android:layout_margin="1dp"
     android:layout_gravity="center"
     app:cardCornerRadius="4dp"
     app:cardBackgroundColor="#fff"
-    app:cardElevation="7dp"
+    app:cardElevation="4dp"
     app:cardUseCompatPadding="true"
     app:cardPreventCornerOverlap="true"
     >
@@ -28,8 +28,9 @@
             />
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="190dp"
             android:layout_height="match_parent"
+            android:id="@+id/book_info_text"
             android:layout_toRightOf="@id/item_img"
             android:orientation="vertical">
             <TextView
@@ -39,15 +40,26 @@
                 android:textColor="@color/gray"
                 android:layout_marginTop="10dp"
                 android:textSize="16sp"/>
+
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/item_authorname"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/gray"
                 android:textSize="13sp"/>
+
         </LinearLayout>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/item_read_situation"
+            android:layout_toRightOf="@id/book_info_text"
+            android:gravity="center_vertical"
+            android:layout_marginRight="5dp"
+            android:textColor="@color/gray"
+            android:textSize="14sp"/>
 
     </RelativeLayout>
 

@@ -26,6 +26,15 @@ public class Book_DB extends DataSupport implements Serializable{
     private String tag1;
     private String tag2;
     private String tag3;
+    private String readSituation;
+
+    public String getReadSituation() {
+        return readSituation;
+    }
+
+    public void setReadSituation(String readSituation) {
+        this.readSituation = readSituation;
+    }
 
     public String getTag1() {
         return tag1;
