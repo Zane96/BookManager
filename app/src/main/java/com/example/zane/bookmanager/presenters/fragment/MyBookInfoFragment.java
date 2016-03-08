@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -23,6 +24,7 @@ import com.example.zane.bookmanager.inject.module.FragmentModule;
 import com.example.zane.bookmanager.model.bean.Book_DB;
 import com.example.zane.bookmanager.presenters.MainActivity;
 import com.example.zane.bookmanager.presenters.activity.MyBookDetailInfoActivity;
+import com.example.zane.bookmanager.presenters.activity.ZxingScannerActivity;
 import com.example.zane.bookmanager.presenters.adapter.MyBookInfoAdapter;
 import com.example.zane.bookmanager.utils.ChangeWindowsAlpha;
 import com.example.zane.bookmanager.view.MyBookInfoView;
@@ -56,22 +58,16 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
     private List<Book_DB> myBooks;
     private MyBookInfoAdapter adapter;
     public static final String BOOK_DB = "BOOK_DB";
-    private OnAddButtonListener scannerButtonListener;
+   // private OnAddButtonListener scannerButtonListener;
     private boolean isSortByDate;
     //1_all, 2_name, 3_author
     private int checkByWhitch = 1;
     private String bookName = "";
     private Observable<Integer> observable;
     private Subscriber<Integer> subscriber;
+    private RecyclerView recyclerView;
 
 
-
-    public interface OnAddButtonListener{
-        void onAddButtonClick();
-    }
-    public void setAddButtonListener(OnAddButtonListener listener){
-        scannerButtonListener = listener;
-    }
 
     public static MyBookInfoFragment newInstance(){
         MyBookInfoFragment fragment = new MyBookInfoFragment();
@@ -85,19 +81,29 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        fetchDataByDate();
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         init();
         initInject();
         fetchDataByDate();
+        adapter.notifyDataSetChanged();
         v.initRecycleView(manager, adapter);
+        v.setFabMenu();
 
+        //搜索功能的接口实现
         adapter.setOnCheckBookListener(new MyBookInfoAdapter.OnCheckBookListener() {
             @Override
             public void onCheckBook(final String book_name) {
                 if (!TextUtils.isEmpty(book_name)) {
                     bookName = book_name;
-                    switch (checkByWhitch){
+                    switch (checkByWhitch) {
                         case 1:
                             checkBookByAll(book_name);
                             break;
@@ -113,7 +119,7 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
                 } else {
                     //如果输入框为空，那么这个也要为空
                     bookName = "";
-                    if (isSortByDate){
+                    if (isSortByDate) {
                         fetchDataByDate();
                         adapter.notifyDataSetChanged();
                     } else {
@@ -129,15 +135,28 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
             }
         });
 
+        //监听滑动，然后判断fab的显示与否
+        recyclerView = v.get(R.id.recyclerview_mybookinfo_fragment);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0){
+                    v.hideFab();
+                }else if (dy < 0){
+                    v.showFab();
+                }
+            }
+        });
         v.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                ExUtils.Toast("点击");
-                Log.i(TAG, String.valueOf(scannerButtonListener));
-                scannerButtonListener.onAddButtonClick();
+            public void onClick(View v1) {
+                getActivity().startActivityForResult(new Intent(getActivity()
+                                                                       , ZxingScannerActivity.class), MainActivity.requestCode_1);
+                v.closeMenu();
             }
-        }, R.id.fab_mybookinfo_fragment);
+        }, R.id.fab_scanner_mybookinfo_fragment);
 
+        //判断哪种排序方式的接口实现
         adapter.setOnSortBookListener(new MyBookInfoAdapter.OnSortBookListener() {
             @Override
             public void onSortByName() {
@@ -151,6 +170,7 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
                 adapter.notifyDataSetChanged();
             }
         });
+        //item的点击事件的监听
         adapter.setOnItemClickListener(new MyBookInfoAdapter.OnItemClickListener() {
             @Override
             public void onClick(int position) {
@@ -190,6 +210,7 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
         });
     }
 
+    //显示查询条目的pop
     public void showPopupView(View v){
 
         ChangeWindowsAlpha.changeWindowsAlpha(getActivity(), 0.7f);
@@ -205,7 +226,7 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
         checkName = (TextView) popView.findViewById(R.id.check_name);
         checkAuthor = (TextView) popView.findViewById(R.id.check_author);
 
-        final PopupWindow popupWindow = new PopupWindow(popView, 400, LinearLayout.LayoutParams.WRAP_CONTENT);
+        final PopupWindow popupWindow = new PopupWindow(popView, 350, LinearLayout.LayoutParams.WRAP_CONTENT);
 
         //popupWindow.showAsDropDown(v);必须放在最后，我日
         popupWindow.setOutsideTouchable(true);
@@ -262,6 +283,7 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
             }
         };
 
+        //通过rx实现响应式的界面（一旦选择之后，立即查询）
         checkAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

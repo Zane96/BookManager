@@ -1,9 +1,8 @@
 package com.example.zane.bookmanager.view;
 
-import android.content.Context;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,6 +12,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.zane.bookmanager.R;
 import com.example.zane.bookmanager.app.MyApplication;
 import com.example.zane.easymvp.view.BaseViewImpl;
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 
 import java.util.List;
 
@@ -41,8 +42,13 @@ public class BookInfoView extends BaseViewImpl {
     CollapsingToolbarLayout collapsingToolbarBookinfo;
     @Bind(R.id.appbar_bookinfo)
     AppBarLayout appbarBookinfo;
-    @Bind(R.id.button_addtodb_bookinfoactivity)
-    FloatingActionButton buttonAddtodbBookinfoactivity;
+    @Bind(R.id.fab_add_bookinfo_fragment)
+    FloatingActionButton fabAddBookinfoFragment;
+    @Bind(R.id.fabmenu_down_bookinfo_fragment)
+    FloatingActionMenu fabmenuDownBookinfoFragment;
+    @Bind(R.id.nestedscrollview_bookinfo)
+    NestedScrollView nestedscrollviewBookinfo;
+
 
     @Override
     public int getRootViewId() {
@@ -72,5 +78,22 @@ public class BookInfoView extends BaseViewImpl {
         textviewAuthornameBookinfoactivity.setText(builder.toString());
         textviewPublishnameBookinfoactivity.setText(publishName);
         textviewPriceBookinfoactivity.setText(price);
+    }
+
+    public void setupFabMenu() {
+        fabmenuDownBookinfoFragment.setClosedOnTouchOutside(true);
+    }
+
+    public void setupNestScrollView() {
+        nestedscrollviewBookinfo.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (scrollY > oldScrollY) {
+                    fabmenuDownBookinfoFragment.hideMenu(true);
+                } else if (scrollY < oldScrollY) {
+                    fabmenuDownBookinfoFragment.showMenu(true);
+                }
+            }
+        });
     }
 }

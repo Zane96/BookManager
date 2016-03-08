@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/background"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:fab="http://schemas.android.com/apk/res-auto"
+             android:background="@color/background"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
 
     <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerview_mybookinfo_fragment"
@@ -14,19 +12,45 @@
             android:layout_height="match_parent"
     />
 
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/fab_mybookinfo_fragment"
-        android:layout_gravity="right|bottom"
-        android:layout_margin="16dp"
-        app:rippleColor="#33728dff"
-        app:elevation="6dp"
-        app:pressedTranslationZ="12dp"
-        android:src="@drawable/ic_menu_send"
-        app:layout_anchor="@id/recyclerview_mybookinfo_fragment"
-        app:layout_anchorGravity="bottom|right|end" />
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/fabmenu_mybookinfo_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:paddingRight="16dp"
+        android:paddingBottom="16dp"
+        fab:menu_labels_ellipsize="end"
+        fab:menu_labels_singleLine="true"
+        android:elevation="4dp"
+        fab:menu_backgroundColor="#ccffffff"
+        fab:menu_colorNormal="#1565C0"
+        fab:menu_colorPressed="#2272CD"
+        fab:menu_colorRipple="#62B2FF"
+        >
 
-</android.support.design.widget.CoordinatorLayout>
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_scanner_mybookinfo_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_menu_send"
+            style="@style/MenuButtonsSmall_Blue"
+            fab:fab_size="mini"
+            fab:fab_label="扫一扫" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_add_mybookinfo_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_menu_send"
+            style="@style/MenuButtonsSmall_Blue"
+            fab:fab_size="mini"
+            fab:fab_label="添加" />
+
+
+    </com.github.clans.fab.FloatingActionMenu>
+
+
+</FrameLayout>
 
 

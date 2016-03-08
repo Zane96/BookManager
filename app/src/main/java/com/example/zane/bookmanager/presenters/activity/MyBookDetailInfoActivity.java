@@ -17,6 +17,7 @@ import com.example.zane.bookmanager.presenters.fragment.MyBookInfoFragment;
 import com.example.zane.bookmanager.presenters.fragment.RecommendedBookFragment;
 import com.example.zane.bookmanager.view.MyBookDetailInfoView;
 import com.example.zane.easymvp.presenter.BaseActivityPresenter;
+import com.github.clans.fab.FloatingActionButton;
 import com.kermit.exutils.utils.ExUtils;
 
 import javax.inject.Inject;
@@ -50,6 +51,8 @@ public class MyBookDetailInfoActivity extends BaseActivityPresenter<MyBookDetail
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+        v.setupNestScrollView();
+
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +63,7 @@ public class MyBookDetailInfoActivity extends BaseActivityPresenter<MyBookDetail
 
         //判断是从哪一个activity跳转而来，因为我需要代码复用。！
         if (whereToComeFrom.equals(MainActivity.TAG)) {
+            v.setupMyBookInfoFabMenuFromMainActivity();
             final Book_DB book = (Book_DB) getIntent().getSerializableExtra(MyBookInfoFragment.BOOK_DB);
             v.setTextviewBookIntroMybookdetail(book.getSummary());
             v.setTextviewAuthorIntroMybookdetail(book.getAuthor_intro());
@@ -72,14 +76,17 @@ public class MyBookDetailInfoActivity extends BaseActivityPresenter<MyBookDetail
             v.setTextviewPublishnameMybookdetail(book.getPublisher());
 
             //fab监听，跳转到推荐书籍页面去
-            v.setOnClickListener(new View.OnClickListener() {
+            FloatingActionButton fab = v.getFab_checkRecommendedBook();
+            fab.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View v1) {
                     Intent intent = new Intent(MyBookDetailInfoActivity.this, RecommendedBookActivity.class);
                     intent.putExtra(BOOKDB, book);
                     startActivity(intent);
+                    v.clodeMenu();
                 }
-            }, R.id.fab_mydetialbookinfo_activity);
+            });
+
         } else if(whereToComeFrom.equals(RecommendedBookFragment.TAG)){
             String isbn = getIntent().getStringExtra(RecommendedBookFragment.ISBN);
             dataManager.getBookInfo(isbn)

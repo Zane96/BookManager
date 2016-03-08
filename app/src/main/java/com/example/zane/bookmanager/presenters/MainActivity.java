@@ -11,6 +11,7 @@ import android.view.MenuItem;
 
 import com.example.zane.bookmanager.R;
 import com.example.zane.bookmanager.app.MyApplication;
+import com.example.zane.bookmanager.config.RetrofitError;
 import com.example.zane.bookmanager.inject.component.ActivityComponent;
 import com.example.zane.bookmanager.inject.component.DaggerActivityComponent;
 import com.example.zane.bookmanager.inject.module.ActivityModule;
@@ -20,12 +21,14 @@ import com.example.zane.bookmanager.presenters.activity.BookInfoActivity;
 import com.example.zane.bookmanager.presenters.activity.ZxingScannerActivity;
 import com.example.zane.bookmanager.presenters.fragment.MainFragment;
 import com.example.zane.bookmanager.presenters.fragment.MyBookInfoFragment;
+import com.example.zane.bookmanager.utils.JudgeNetError;
 import com.example.zane.bookmanager.view.MainView;
 import com.example.zane.easymvp.presenter.BaseActivityPresenter;
 import com.kermit.exutils.utils.ExUtils;
 
 import javax.inject.Inject;
 
+import retrofit.Retrofit;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -55,12 +58,12 @@ public class MainActivity extends BaseActivityPresenter<MainView> {
         v.init(this, myBookInfoFragment);
         initInject();
 
-        myBookInfoFragment.setAddButtonListener(new MyBookInfoFragment.OnAddButtonListener() {
-            @Override
-            public void onAddButtonClick() {
-                v.transToAddBookFragment();
-            }
-        });
+//        myBookInfoFragment.setAddButtonListener(new MyBookInfoFragment.OnAddButtonListener() {
+//            @Override
+//            public void onAddButtonClick() {
+//                v.transToAddBookFragment();
+//            }
+//        });
     }
 
     public void initInject(){
@@ -82,7 +85,6 @@ public class MainActivity extends BaseActivityPresenter<MainView> {
             switch (requestCode) {
                 case requestCode_1:
                 isbn = data.getStringExtra(ISBN);
-                ExUtils.Toast(isbn);
                 datamanager.getBookInfo(isbn)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.io())
@@ -94,12 +96,11 @@ public class MainActivity extends BaseActivityPresenter<MainView> {
 
                             @Override
                             public void onError(Throwable e) {
-                                Log.i("MainActivity2", String.valueOf(e));
+                                JudgeNetError.judgeWhitchNetError(e);
                             }
 
                             @Override
                             public void onNext(Book book) {
-                                ExUtils.ToastLong(String.valueOf(book));
                                 Intent intent = new Intent(MainActivity.this, BookInfoActivity.class);
                                 intent.putExtra(BOOK_INFO, book);
                                 startActivity(intent);

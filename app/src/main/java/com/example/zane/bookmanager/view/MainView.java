@@ -55,11 +55,11 @@ public class MainView extends BaseViewImpl implements NavigationView.OnNavigatio
         navView.setNavigationItemSelectedListener(this);
     }
 
-    public void transToAddBookFragment(){
-        FragmentTransaction transaction = context.getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_replace, MainFragment.newInstance());
-        transaction.commit();
-    }
+//    public void transToAddBookFragment(){
+//        FragmentTransaction transaction = context.getSupportFragmentManager().beginTransaction();
+//        transaction.replace(R.id.fragment_replace, MainFragment.newInstance());
+//        transaction.commit();
+//    }
 
     public void transToMyBookInfoFragment(){
         FragmentTransaction transaction = context.getSupportFragmentManager().beginTransaction();

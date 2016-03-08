@@ -13,6 +13,7 @@
         android:textSize="16sp"
         android:layout_margin="4dp"
         android:id="@+id/check_all"
+        android:gravity="center"
         />
     <View
         android:layout_width="match_parent"
@@ -26,6 +27,7 @@
         android:textSize="16sp"
         android:layout_margin="4dp"
         android:id="@+id/check_name"
+        android:gravity="center"
         />
     <View
         android:layout_width="match_parent"
@@ -39,6 +41,7 @@
         android:textSize="16sp"
         android:layout_margin="4dp"
         android:id="@+id/check_author"
+        android:gravity="center"
         />
 
 </LinearLayout>

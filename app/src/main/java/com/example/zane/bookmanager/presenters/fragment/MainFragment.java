@@ -43,8 +43,6 @@ public class MainFragment extends BaseFragmentPresenter<MainFragmentView>{
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().startActivityForResult(new Intent(getActivity()
-                                                                       , ZxingScannerActivity.class), MainActivity.requestCode_1);
 
             }
         }, R.id.button_scnnar);

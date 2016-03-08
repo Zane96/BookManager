@@ -2,6 +2,7 @@
 <android.support.design.widget.CoordinatorLayout
 xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:fab="http://schemas.android.com/apk/res-auto"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:fitsSystemWindows="true">
@@ -46,6 +47,7 @@ android:fitsSystemWindows="true">
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
+    android:id="@+id/nestedscrollview_bookinfo"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <LinearLayout
@@ -222,14 +224,33 @@ android:fitsSystemWindows="true">
 
 </android.support.v4.widget.NestedScrollView>
 
-<android.support.design.widget.FloatingActionButton
-    android:layout_height="wrap_content"
-    android:layout_width="wrap_content"
-    app:layout_anchor="@id/appbar_bookinfo"
-    app:layout_anchorGravity="bottom|right|end"
-    android:src="@drawable/ic_menu_send"
-    android:layout_margin="16dp"
-    android:id="@+id/button_addtodb_bookinfoactivity"
-    android:clickable="true"/>
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/fabmenu_down_bookinfo_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:paddingRight="16dp"
+        android:paddingBottom="16dp"
+        fab:menu_labels_ellipsize="end"
+        fab:menu_labels_singleLine="true"
+        android:elevation="4dp"
+        fab:menu_backgroundColor="#ccffffff"
+        fab:menu_colorNormal="#1565C0"
+        fab:menu_colorPressed="#2272CD"
+        fab:menu_colorRipple="#62B2FF"
+        app:menu_openDirection="up"
+        >
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_add_bookinfo_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_menu_send"
+            fab:fab_size="mini"
+            fab:fab_label="添加到书单" />
+
+    </com.github.clans.fab.FloatingActionMenu>
+
 
 </android.support.design.widget.CoordinatorLayout>

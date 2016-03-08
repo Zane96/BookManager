@@ -1,17 +1,33 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
+    def versionPropsFile = file('version.properties')
 
-    defaultConfig {
-        applicationId "com.example.zane.bookmanager"
-        minSdkVersion 15
-        targetSdkVersion 23
-        versionCode 1
-        versionName "1.3.1"
+    if (versionPropsFile.canRead()) {
+        def Properties versionProps = new Properties()
+
+        versionProps.load(new FileInputStream(versionPropsFile))
+
+        def code = versionProps['VERSION_CODE'].toInteger() + 1
+
+        versionProps['VERSION_CODE']=code.toString()
+        versionProps.store(versionPropsFile.newWriter(), null)
+
+        defaultConfig {
+            versionCode code
+            versionName "1.4.0"
+            minSdkVersion 15
+            targetSdkVersion 23
+        }
     }
+    else {
+        throw new GradleException("Could not read version.properties!")
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -21,6 +37,7 @@ android {
     packagingOptions {
         exclude 'META-INF/services/javax.annotation.processing.Processor'
     }
+
 }
 
 dependencies {
@@ -48,4 +65,6 @@ dependencies {
     compile('com.github.afollestad.material-dialogs:core:0.8.5.4@aar') {
         transitive = true
     }
+    compile 'com.github.clans:fab:1.6.2'
 }
+

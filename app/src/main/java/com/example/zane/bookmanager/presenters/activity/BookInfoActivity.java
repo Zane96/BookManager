@@ -26,6 +26,7 @@ import rx.functions.Action1;
 
 /**
  * Created by Zane on 16/2/14.
+ * 扫描出来的书的结果显示页面
  */
 public class BookInfoActivity extends BaseActivityPresenter<BookInfoView>{
 
@@ -54,6 +55,8 @@ public class BookInfoActivity extends BaseActivityPresenter<BookInfoView>{
                 finish();
             }
         });
+        v.setupFabMenu();
+        v.setupNestScrollView();
 
         v.setupToolbar(book.getImages().getLarge());
         v.setBookInfo(book.getTitle(), book.getAuthor(), book.getPublisher(), book.getPrice());
@@ -111,7 +114,7 @@ public class BookInfoActivity extends BaseActivityPresenter<BookInfoView>{
                         finish();
                     }
                 }
-            }, R.id.button_addtodb_bookinfoactivity);
+            }, R.id.fab_add_bookinfo_fragment);
 
     }
 

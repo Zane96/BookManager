@@ -2,8 +2,9 @@ package com.example.zane.bookmanager.view;
 
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,6 +13,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.zane.bookmanager.R;
 import com.example.zane.bookmanager.app.MyApplication;
 import com.example.zane.easymvp.view.BaseViewImpl;
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
+import com.kermit.exutils.utils.ExUtils;
 
 import butterknife.Bind;
 
@@ -44,8 +48,12 @@ public class MyBookDetailInfoView extends BaseViewImpl {
     CollapsingToolbarLayout collapsingToolbar;
     @Bind(R.id.appbar_detail)
     AppBarLayout appbarDetail;
-    @Bind(R.id.fab_mydetialbookinfo_activity)
-    FloatingActionButton fabMydetialbookinfoActivity;
+    @Bind(R.id.fabmenu_down_mybookinfo_fragment)
+    FloatingActionMenu fabmenuDownMybookinfoFragment;
+    @Bind(R.id.nestedscrollview_mydetailbook)
+    NestedScrollView nestedscrollviewMydetailbook;
+
+    private FloatingActionButton fab_checkRecommendedBook;
 
 
     @Override
@@ -63,6 +71,7 @@ public class MyBookDetailInfoView extends BaseViewImpl {
                 .fitCenter()
                 .error(R.mipmap.ic_launcher)
                 .into(imageviewMybookdetailActivity);
+
     }
 
     public void setTextviewBooknameMybookdetail(String bookName) {
@@ -95,5 +104,36 @@ public class MyBookDetailInfoView extends BaseViewImpl {
 
     public void setTextviewBookIntroMybookdetail(String s) {
         textviewBookIntroMybookdetail.setText(s);
+    }
+
+    public void setupMyBookInfoFabMenuFromMainActivity() {
+        fabmenuDownMybookinfoFragment.setClosedOnTouchOutside(true);
+        fab_checkRecommendedBook = new FloatingActionButton(MyApplication.getApplicationContext2());
+        fab_checkRecommendedBook.setButtonSize(FloatingActionButton.SIZE_MINI);
+        fab_checkRecommendedBook.setLabelText("查看相关书籍");
+        fab_checkRecommendedBook.setImageResource(R.drawable.ic_menu_send);
+        fabmenuDownMybookinfoFragment.addMenuButton(fab_checkRecommendedBook);
+    }
+
+    public void clodeMenu() {
+        fabmenuDownMybookinfoFragment.close(true);
+    }
+
+    public void setupNestScrollView(){
+        nestedscrollviewMydetailbook.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (scrollY > oldScrollY){
+                    fabmenuDownMybookinfoFragment.hideMenu(true);
+                } else if(scrollY < oldScrollY){
+                    fabmenuDownMybookinfoFragment.showMenu(true);
+                }
+            }
+        });
+    }
+
+    //好像如果java代码添加控件的话，只能通过函数把控件暴露出去，不能用view的set方法！这点怎么解决？
+    public FloatingActionButton getFab_checkRecommendedBook() {
+        return fab_checkRecommendedBook;
     }
 }
