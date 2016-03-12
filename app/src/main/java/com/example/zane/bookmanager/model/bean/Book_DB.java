@@ -27,6 +27,15 @@ public class Book_DB extends DataSupport implements Serializable{
     private String tag2;
     private String tag3;
     private String readSituation;
+    private String average;
+
+    public String getAverage() {
+        return average;
+    }
+
+    public void setAverage(String average) {
+        this.average = average;
+    }
 
     public String getReadSituation() {
         return readSituation;

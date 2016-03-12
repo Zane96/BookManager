@@ -150,9 +150,9 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v1) {
+                v.closeMenu();
                 getActivity().startActivityForResult(new Intent(getActivity()
                                                                        , ZxingScannerActivity.class), MainActivity.requestCode_1);
-                v.closeMenu();
             }
         }, R.id.fab_scanner_mybookinfo_fragment);
 
@@ -458,7 +458,7 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
             adapter.setMyBooks(myBooks);
             adapter.notifyDataSetChanged();
         } else {
-            adapter.setMyBooks(new ArrayList<Book_DB>());
+            adapter.clear();
             adapter.notifyDataSetChanged();
         }
     }
@@ -508,7 +508,7 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
             adapter.setMyBooks(myBooks);
             adapter.notifyDataSetChanged();
         } else {
-            adapter.setMyBooks(new ArrayList<Book_DB>());
+            adapter.clear();
             adapter.notifyDataSetChanged();
         }
     }
@@ -517,6 +517,7 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
         manager = new LinearLayoutManager(MyApplication.getApplicationContext2());
         adapter = new MyBookInfoAdapter(MyApplication.getApplicationContext2());
     }
+
     public void initInject(){
         MainActivity activity = (MainActivity)getActivity();
         DaggerFragmentComponent.builder()

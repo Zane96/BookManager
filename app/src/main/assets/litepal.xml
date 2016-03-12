@@ -2,9 +2,10 @@
 <litepal>
 	<dbname value="BookInfo" ></dbname>
 
-	<version value="5" ></version>
+	<version value="9" ></version>
 
 	<list>
 		<mapping class="com.example.zane.bookmanager.model.bean.Book_DB"></mapping>
+		<mapping class="com.example.zane.bookmanager.model.bean.Book_Read"></mapping>
 	</list>
 </litepal>

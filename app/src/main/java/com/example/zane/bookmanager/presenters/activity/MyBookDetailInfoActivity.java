@@ -13,9 +13,11 @@ import com.example.zane.bookmanager.inject.component.DaggerActivityComponent;
 import com.example.zane.bookmanager.inject.module.ActivityModule;
 import com.example.zane.bookmanager.model.bean.Book;
 import com.example.zane.bookmanager.model.bean.Book_DB;
+import com.example.zane.bookmanager.model.bean.Book_Read;
 import com.example.zane.bookmanager.model.data.DataManager;
 import com.example.zane.bookmanager.presenters.MainActivity;
 import com.example.zane.bookmanager.presenters.fragment.MyBookInfoFragment;
+import com.example.zane.bookmanager.presenters.fragment.ReadPlaneDialogFragment;
 import com.example.zane.bookmanager.presenters.fragment.RecommendedBookFragment;
 import com.example.zane.bookmanager.view.MyBookDetailInfoView;
 import com.example.zane.easymvp.presenter.BaseActivityPresenter;
@@ -57,7 +59,6 @@ public class MyBookDetailInfoActivity extends BaseActivityPresenter<MyBookDetail
         getSupportActionBar().setHomeButtonEnabled(true);
         v.setupNestScrollView();
 
-
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,59 +85,96 @@ public class MyBookDetailInfoActivity extends BaseActivityPresenter<MyBookDetail
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v1) {
+                    v.clodeMenu();
                     Intent intent = new Intent(MyBookDetailInfoActivity.this, RecommendedBookActivity.class);
                     intent.putExtra(BOOKDB, book);
                     startActivity(intent);
-                    v.clodeMenu();
                 }
             });
 
-            // TODO: 16/3/8 添加到我的阅读计划和添加到想要读书的fab点击监听
+            // TODO: 16/3/8 添加到想要读书的fab点击监听
             FloatingActionButton fab_read = v.getFab_addto_read();
             fab_read.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v1) {
-                    ContentValues values = new ContentValues();
-                    values.put("readSituation", getResources().getString(R.string.reading));
-                    DataSupport.update(Book_DB.class, values, book.getId());
                     v.clodeMenu();
-                    Toast.makeText(MyBookDetailInfoActivity.this, "添加成功！～", Toast.LENGTH_SHORT).show();
+                    //先判断是不是已经添加到阅读计划了
+                    if (book.getReadSituation() != null){
+                        Toast.makeText(MyBookDetailInfoActivity.this, "你已经添加了哦～", Toast.LENGTH_SHORT).show();
+                    }else {
+
+                        //更新这本书的阅读情况
+                        ContentValues values = new ContentValues();
+                        values.put("readSituation", getResources().getString(R.string.reading));
+                        DataSupport.update(Book_DB.class, values, book.getId());
+
+                        //弹出用户输入计划阅读天数的dialog
+                        final ReadPlaneDialogFragment readPlaneDialogFragment = new ReadPlaneDialogFragment();
+                        readPlaneDialogFragment.show(getFragmentManager(), "planeDaysDialog");
+                        readPlaneDialogFragment.setOnPositiveClickListener(new ReadPlaneDialogFragment.OnPositiveClickListener() {
+                            @Override
+                            public void onClick(String days) {
+                                if (days == "" || days == null){
+                                    Toast.makeText(MyBookDetailInfoActivity.this, "你输入的天数为空哦～", Toast.LENGTH_SHORT).show();
+                                }else {
+                                    Book_Read book_read = new Book_Read();
+                                    book_read.setAuthor(book.getAuthor());
+                                    book_read.setTitle(book.getTitle());
+                                    book_read.setImage(book.getImage());
+                                    book_read.setPages(book.getPages());
+                                    book_read.setPlaneDays(Integer.parseInt(days));
+                                    book_read.setReadPages("0");
+                                    book_read.setUsedDays(0);
+
+                                    if (book_read.save()) {
+                                        Toast.makeText(MyBookDetailInfoActivity.this, "添加成功！～", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(MyBookDetailInfoActivity.this, "添加失败！～", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                                readPlaneDialogFragment.dismiss();
+                            }
+
+                            @Override
+                            public void onNaviClick() {
+                                Book_Read book_read = new Book_Read();
+                                book_read.setAuthor(book.getAuthor());
+                                book_read.setTitle(book.getTitle());
+                                book_read.setImage(book.getImage());
+                                book_read.setPages(book.getPages());
+                                book_read.setReadPages("0");
+                                book_read.setPlaneDays(0);
+                                book_read.setUsedDays(0);
+                                book_read.save();
+
+                                if (book_read.save()) {
+                                    Toast.makeText(MyBookDetailInfoActivity.this, "添加成功！～", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(MyBookDetailInfoActivity.this, "添加失败！～", Toast.LENGTH_SHORT).show();
+                                }
+                                readPlaneDialogFragment.dismiss();
+                            }
+                        });
+                    }
                 }
             });
 
         } else if(whereToComeFrom.equals(RecommendedBookFragment.TAG)){
-            String isbn = getIntent().getStringExtra(RecommendedBookFragment.ISBN);
-            dataManager.getBookInfo(isbn)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
-                    .subscribe(new Subscriber<Book>() {
-                        @Override
-                        public void onCompleted() {
+            Book book = (Book)getIntent().getSerializableExtra(RecommendedBookFragment.ISBN);
 
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            ExUtils.Toast(String.valueOf(e));
-                        }
-
-                        @Override
-                        public void onNext(Book book) {
-                            v.setTextviewBookIntroMybookdetail(book.getSummary());
-                            v.setTextviewAuthorIntroMybookdetail(book.getAuthor_intro());
-                            v.setupToolbar(book.getImages().getLarge(), book.getTitle());
-                            StringBuilder sb = new StringBuilder();
-                            for(int i = 0; i < book.getAuthor().size(); i++){
-                                sb.append(book.getAuthor().get(i)).append(". ");
-                            }
-                            v.setTextviewAuthornameMybookdetail(sb.toString());
-                            v.setTextviewBooknameMybookdetail(book.getTitle());
-                            v.setTextviewPagesMybookdetail(book.getPages());
-                            v.setTextviewPriceMybookdetail(book.getPrice());
-                            v.setTextviewPublishdateMybookdetail(book.getPubdate());
-                            v.setTextviewPublishnameMybookdetail(book.getPublisher());
-                        }
-                    });
+            v.setTextviewBookIntroMybookdetail(book.getSummary());
+            v.setTextviewAuthorIntroMybookdetail(book.getAuthor_intro());
+            v.setupToolbar(book.getImages().getLarge(), book.getTitle());
+            StringBuilder sb = new StringBuilder();
+            for(int i = 0; i < book.getAuthor().size(); i++){
+                sb.append(book.getAuthor().get(i)).append(". ");
+            }
+            v.setTextviewAuthornameMybookdetail(sb.toString());
+            v.setTextviewBooknameMybookdetail(book.getTitle());
+            v.setTextviewPagesMybookdetail(book.getPages());
+            v.setTextviewPriceMybookdetail(book.getPrice());
+            v.setTextviewPublishdateMybookdetail(book.getPubdate());
+            v.setTextviewPublishnameMybookdetail(book.getPublisher());
         }
     }
 

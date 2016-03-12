@@ -19,9 +19,9 @@ import java.util.List;
 /**
  * Created by Zane on 16/2/23.
  */
-public class RecommendedBooklistAdapter extends BaseListAdapterPresenter<Book_Recom.BooksEntity>{
+public class RecommendedBooklistAdapter extends BaseListAdapterPresenter<Book>{
 
-    private List<Book_Recom.BooksEntity> myBooks;
+    private List<Book> myBooks;
     private OnItemClickListener listener;
 
 
@@ -39,7 +39,7 @@ public class RecommendedBooklistAdapter extends BaseListAdapterPresenter<Book_Re
         myBooks = new ArrayList<>();
     }
 
-    public void setMyBooks(List<Book_Recom.BooksEntity> books){
+    public void setMyBooks(List<Book> books){
         myBooks = books;
     }
 

@@ -65,7 +65,7 @@ android:fitsSystemWindows="true">
             android:layout_marginTop="4dp"
             app:cardCornerRadius="4dp"
             app:cardBackgroundColor="#fff"
-            app:cardElevation="8dp"
+            app:cardElevation="2dp"
             app:cardUseCompatPadding="true"
             app:cardPreventCornerOverlap="true">
 
@@ -107,7 +107,7 @@ android:fitsSystemWindows="true">
             android:layout_marginRight="16dp"
             app:cardCornerRadius="4dp"
             app:cardBackgroundColor="#fff"
-            app:cardElevation="8dp"
+            app:cardElevation="2dp"
             app:cardUseCompatPadding="true"
             app:cardPreventCornerOverlap="true">
 
@@ -148,7 +148,7 @@ android:fitsSystemWindows="true">
             android:layout_marginRight="16dp"
             app:cardCornerRadius="4dp"
             app:cardBackgroundColor="#fff"
-            app:cardElevation="8dp"
+            app:cardElevation="2dp"
             app:cardUseCompatPadding="true"
             app:cardPreventCornerOverlap="true">
 
@@ -188,7 +188,7 @@ android:fitsSystemWindows="true">
             android:layout_marginRight="16dp"
             app:cardCornerRadius="4dp"
             app:cardBackgroundColor="#fff"
-            app:cardElevation="8dp"
+            app:cardElevation="2dp"
             app:cardUseCompatPadding="true"
             app:cardPreventCornerOverlap="true">
 
@@ -228,7 +228,7 @@ android:fitsSystemWindows="true">
             android:layout_marginRight="16dp"
             app:cardCornerRadius="4dp"
             app:cardBackgroundColor="#fff"
-            app:cardElevation="8dp"
+            app:cardElevation="2dp"
             app:cardUseCompatPadding="true"
             app:cardPreventCornerOverlap="true">
 
@@ -268,7 +268,7 @@ android:fitsSystemWindows="true">
             android:layout_marginRight="16dp"
             app:cardCornerRadius="4dp"
             app:cardBackgroundColor="#fff"
-            app:cardElevation="8dp"
+            app:cardElevation="2dp"
             app:cardUseCompatPadding="true"
             app:cardPreventCornerOverlap="true">
 
@@ -308,7 +308,7 @@ android:fitsSystemWindows="true">
             android:layout_marginRight="16dp"
             app:cardCornerRadius="4dp"
             app:cardBackgroundColor="#fff"
-            app:cardElevation="8dp"
+            app:cardElevation="2dp"
             app:cardUseCompatPadding="true"
             app:cardPreventCornerOverlap="true">
 
@@ -345,7 +345,7 @@ android:fitsSystemWindows="true">
             android:layout_marginRight="16dp"
             app:cardCornerRadius="4dp"
             app:cardBackgroundColor="#fff"
-            app:cardElevation="8dp"
+            app:cardElevation="2dp"
             app:cardUseCompatPadding="true"
             app:cardPreventCornerOverlap="true">
 

@@ -16,10 +16,12 @@ import com.example.zane.easymvp.view.BaseListViewHolderImpl;
 /**
  * Created by Zane on 16/2/23.
  */
-public class RecommendedBookViewHolder extends BaseListViewHolderImpl<Book_Recom.BooksEntity>{
+public class RecommendedBookViewHolder extends BaseListViewHolderImpl<Book>{
+
     private ImageView bookImage;
     private TextView bookName;
     private TextView authorName;
+    private TextView star;
 
     public RecommendedBookViewHolder(ViewGroup parent, int res) {
         super(parent, res);
@@ -30,10 +32,11 @@ public class RecommendedBookViewHolder extends BaseListViewHolderImpl<Book_Recom
         bookImage = $(R.id.item_img);
         bookName = $(R.id.item_bookname);
         authorName = $(R.id.item_authorname);
+        star = $(R.id.textview_mybookinfo_star);
     }
 
     @Override
-    public void setData(Book_Recom.BooksEntity book) {
+    public void setData(Book book) {
 
         Glide.with(MyApplication.getApplicationContext2())
                 .load(book.getImages().getLarge())
@@ -48,5 +51,6 @@ public class RecommendedBookViewHolder extends BaseListViewHolderImpl<Book_Recom
             sb.append(book.getAuthor().get(i));
         }
         authorName.setText(sb.toString());
+        star.setText(book.getRating().getAverage());
     }
 }

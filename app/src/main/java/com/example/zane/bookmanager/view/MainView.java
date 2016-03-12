@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import com.example.zane.bookmanager.R;
 import com.example.zane.bookmanager.presenters.fragment.MainFragment;
 import com.example.zane.bookmanager.presenters.fragment.MyBookInfoFragment;
+import com.example.zane.bookmanager.presenters.fragment.ReadPlaneFragment;
 import com.example.zane.easymvp.view.BaseViewImpl;
 
 import butterknife.Bind;
@@ -22,6 +23,7 @@ import butterknife.Bind;
  * Created by Zane on 16/2/14.
  */
 public class MainView extends BaseViewImpl implements NavigationView.OnNavigationItemSelectedListener {
+
     @Bind(R.id.toolbar)
     Toolbar toolbar;
     @Bind(R.id.nav_view)
@@ -31,6 +33,7 @@ public class MainView extends BaseViewImpl implements NavigationView.OnNavigatio
 
     public AppCompatActivity context;
     private MyBookInfoFragment fragment;
+    private ReadPlaneFragment readPlaneFragment;
 
     @Override
     public int getRootViewId() {
@@ -41,6 +44,7 @@ public class MainView extends BaseViewImpl implements NavigationView.OnNavigatio
 
         this.context = context;
         this.fragment = fragment;
+        readPlaneFragment = new ReadPlaneFragment();
         //初始fragment
         FragmentTransaction transaction = context.getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_replace, fragment);
@@ -55,15 +59,15 @@ public class MainView extends BaseViewImpl implements NavigationView.OnNavigatio
         navView.setNavigationItemSelectedListener(this);
     }
 
-//    public void transToAddBookFragment(){
-//        FragmentTransaction transaction = context.getSupportFragmentManager().beginTransaction();
-//        transaction.replace(R.id.fragment_replace, MainFragment.newInstance());
-//        transaction.commit();
-//    }
-
     public void transToMyBookInfoFragment(){
         FragmentTransaction transaction = context.getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_replace, fragment);
+        transaction.commit();
+    }
+
+    public void transToReadPlaneFragment(){
+        FragmentTransaction transaction = context.getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_replace, readPlaneFragment);
         transaction.commit();
     }
 
@@ -74,6 +78,8 @@ public class MainView extends BaseViewImpl implements NavigationView.OnNavigatio
 
         if (id == R.id.my_all_book) {
             transToMyBookInfoFragment();
+        } else if (id == R.id.my_reading_book){
+            transToReadPlaneFragment();
         }
 
 //        } else if (id == R.id.nav_gallery) {

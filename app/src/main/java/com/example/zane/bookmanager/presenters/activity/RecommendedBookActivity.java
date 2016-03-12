@@ -11,22 +11,18 @@ import com.example.zane.bookmanager.app.MyApplication;
 import com.example.zane.bookmanager.inject.component.ActivityComponent;
 import com.example.zane.bookmanager.inject.component.DaggerActivityComponent;
 import com.example.zane.bookmanager.inject.module.ActivityModule;
-import com.example.zane.bookmanager.model.bean.Book;
 import com.example.zane.bookmanager.model.bean.Book_DB;
-import com.example.zane.bookmanager.presenters.adapter.RecomBookViewPageAdapter;
+import com.example.zane.bookmanager.presenters.adapter.FragmentViewPageAdapter;
 import com.example.zane.bookmanager.presenters.fragment.RecommendedBookFragment;
 import com.example.zane.bookmanager.view.RecommendedBookActivityView;
 import com.example.zane.easymvp.presenter.BaseActivityPresenter;
-
-import rx.Observable;
-import rx.functions.Func1;
 
 /**
  * Created by Zane on 16/2/23.
  */
 public class RecommendedBookActivity extends BaseActivityPresenter<RecommendedBookActivityView>{
 
-    private RecomBookViewPageAdapter adapter;
+    private FragmentViewPageAdapter adapter;
     private Book_DB book_db;
     private ViewPager viewPager;
     private Toolbar toolbar;
@@ -69,7 +65,7 @@ public class RecommendedBookActivity extends BaseActivityPresenter<RecommendedBo
     }
 
     public void setViewPager(){
-        adapter = new RecomBookViewPageAdapter(getSupportFragmentManager());
+        adapter = new FragmentViewPageAdapter(getSupportFragmentManager());
         Log.i(TAG, book_db.getAuthor());
         adapter.addFragments(RecommendedBookFragment.newInstance(book_db.getAuthor(), false), "作者其他书籍");
         StringBuilder stringBuilder = new StringBuilder();

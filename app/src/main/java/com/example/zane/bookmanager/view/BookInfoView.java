@@ -96,4 +96,8 @@ public class BookInfoView extends BaseViewImpl {
             }
         });
     }
+
+    public void closeMenu(){
+        fabmenuDownBookinfoFragment.close(true);
+    }
 }

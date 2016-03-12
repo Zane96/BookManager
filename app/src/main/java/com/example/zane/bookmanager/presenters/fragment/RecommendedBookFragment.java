@@ -22,6 +22,7 @@ import com.example.zane.bookmanager.presenters.activity.BookInfoActivity;
 import com.example.zane.bookmanager.presenters.activity.MyBookDetailInfoActivity;
 import com.example.zane.bookmanager.presenters.activity.RecommendedBookActivity;
 import com.example.zane.bookmanager.presenters.adapter.RecommendedBooklistAdapter;
+import com.example.zane.bookmanager.utils.JudgeNetError;
 import com.example.zane.bookmanager.view.RecommendedBookView;
 import com.example.zane.easymvp.presenter.BaseFragmentPresenter;
 import com.kermit.exutils.utils.ExUtils;
@@ -32,8 +33,10 @@ import java.util.Locale;
 
 import javax.inject.Inject;
 
+import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 
@@ -47,7 +50,7 @@ public class RecommendedBookFragment extends BaseFragmentPresenter<RecommendedBo
     public static final String ISBN = "ISBN";
     public static final String TAG = "RecommendedBookFragment";
     private RecommendedBooklistAdapter adapter;
-    private List<Book_Recom.BooksEntity> books;
+    private List<Book> books_check;
     //为了做到代码复用，所以我需要判断现在是找作者其他书籍还是类似书籍
     private boolean isByTags;
     private String author_tag;
@@ -78,6 +81,7 @@ public class RecommendedBookFragment extends BaseFragmentPresenter<RecommendedBo
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        //Log.i(TAG, "onViewCreated");
         init();
         initInject();
         v.setUpRecycleView(linearLayoutManager, adapter);
@@ -87,7 +91,7 @@ public class RecommendedBookFragment extends BaseFragmentPresenter<RecommendedBo
             public void onClick(int positon) {
                 Intent intent = new Intent(getActivity(), MyBookDetailInfoActivity.class);
                 intent.putExtra(MainActivity.TAG, TAG);
-                intent.putExtra(ISBN, books.get(positon).getIsbn13());
+                intent.putExtra(ISBN, books_check.get(positon));
                 startActivity(intent);
             }
 
@@ -97,20 +101,23 @@ public class RecommendedBookFragment extends BaseFragmentPresenter<RecommendedBo
             }
         });
 
+        //根据不同的查询条件（作者或者类型）来分别组装出不同的url
+        //like: https://api.douban.com/v2/book/search?tag=java&fields=id,title,isbn13
+        //https://api.douban.com/v2/book/search?q=周志明&fields=id,title,isbn13,author
         if (isByTags){
             String tags[] = author_tag.split("\\.");
-            Log.i(TAG, author_tag+"hehe"+tags.length);
+            //Log.i(TAG, author_tag+"hehe"+tags.length);
             for (int i = 0; i < tags.length; i++){
                 if (tags[i] != null){
-                    Log.i(TAG, tags[i]+"haha");
+                    //Log.i(TAG, tags[i]+"haha");
                     fetchData(tags[i]);
                 }
             }
         } else {
-            Log.i(TAG, author_tag);
+            //Log.i(TAG, author_tag);
             String tags[] = author_tag.split("\\. ");
             for (int i = 0; i < tags.length; i++){
-                Log.i(TAG, tags[i] + "haha");
+                //Log.i(TAG, tags[i] + "haha");
                 if(tags[i] != null){
                     fetchData(tags[i]);
                 }
@@ -119,30 +126,68 @@ public class RecommendedBookFragment extends BaseFragmentPresenter<RecommendedBo
     }
 
     public void fetchData(String param){
-        dataManager.getRecomBoonInfo(param, "id,title,isbn13,author,images")
+        dataManager.getRecomBoonInfo(param, "isbn13")
+                .flatMap(new Func1<Book_Recom, Observable<Book_Recom.BooksEntity>>() {
+                    @Override
+                    public Observable<Book_Recom.BooksEntity> call(Book_Recom book_recom) {
+                        return Observable.from(book_recom.getBooks());
+                    }
+                })
+                .map(new Func1<Book_Recom.BooksEntity, String>() {
+                    @Override
+                    public String call(Book_Recom.BooksEntity booksEntity) {
+                        return booksEntity.getIsbn13();
+                    }
+                })
+                .flatMap(new Func1<String, Observable<Book>>() {
+                    @Override
+                    public Observable<Book> call(String s) {
+                        return dataManager.getBookInfo(s);
+                    }
+                })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<Book_Recom>() {
+                .subscribe(new Subscriber<Book>() {
                     @Override
                     public void onCompleted() {
-                        adapter.setMyBooks(books);
+                        adapter.setMyBooks(books_check);
                         adapter.notifyDataSetChanged();
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        ExUtils.Toast(String.valueOf(e));
+                        JudgeNetError.judgeWhitchNetError(e);
                     }
 
                     @Override
-                    public void onNext(Book_Recom book) {
-                        books.addAll(book.getBooks());
+                    public void onNext(Book book) {
+                        books_check.add(book);
                     }
                 });
+//        dataManager.getRecomBoonInfo(param, "id,title,isbn13,author,images")
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribeOn(Schedulers.io())
+//                .subscribe(new Subscriber<Book_Recom>() {
+//                    @Override
+//                    public void onCompleted() {
+//                        adapter.setMyBooks(books);
+//                        adapter.notifyDataSetChanged();
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        ExUtils.Toast(String.valueOf(e));
+//                    }
+//
+//                    @Override
+//                    public void onNext(Book_Recom book) {
+//                        books.addAll(book.getBooks());
+//                    }
+//                });
     }
 
     public void init(){
-        books = new ArrayList<>();
+        books_check = new ArrayList<>();
         adapter = new RecommendedBooklistAdapter(MyApplication.getApplicationContext2());
         author_tag = getArguments().getString(AUTHOR_TAG);
         isByTags = getArguments().getBoolean(ISBYTAGS);

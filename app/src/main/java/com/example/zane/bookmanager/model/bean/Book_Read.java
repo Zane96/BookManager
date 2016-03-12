@@ -8,7 +8,7 @@ import java.io.Serializable;
  * Created by Zane on 16/3/8.
  * 阅读计划存储表
  */
-public class Book_Read extends DataSupport implements Serializable{
+public class Book_Read extends DataSupport{
 
     private int planeDays;//计划天数
     private int usedDays;//已经读过的天数
@@ -16,6 +16,15 @@ public class Book_Read extends DataSupport implements Serializable{
     private String readPages;//已读页数
     private String title;
     private String image;
+    private String author;
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
 
     public String getReadPages() {
         return readPages;
