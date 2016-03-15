@@ -36,7 +36,7 @@ android:fitsSystemWindows="true">
             android:id="@+id/toolbar_bookinfo_activity"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            android:theme="@style/MyCustomToolBarStyle"
             app:layout_collapseMode="parallax" />
 
     </android.support.design.widget.CollapsingToolbarLayout>

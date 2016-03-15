@@ -103,18 +103,13 @@ public class MyBookDetailInfoActivity extends BaseActivityPresenter<MyBookDetail
                         Toast.makeText(MyBookDetailInfoActivity.this, "你已经添加了哦～", Toast.LENGTH_SHORT).show();
                     }else {
 
-                        //更新这本书的阅读情况
-                        ContentValues values = new ContentValues();
-                        values.put("readSituation", getResources().getString(R.string.reading));
-                        DataSupport.update(Book_DB.class, values, book.getId());
-
                         //弹出用户输入计划阅读天数的dialog
                         final ReadPlaneDialogFragment readPlaneDialogFragment = new ReadPlaneDialogFragment();
                         readPlaneDialogFragment.show(getFragmentManager(), "planeDaysDialog");
                         readPlaneDialogFragment.setOnPositiveClickListener(new ReadPlaneDialogFragment.OnPositiveClickListener() {
                             @Override
                             public void onClick(String days) {
-                                if (days == "" || days == null){
+                                if (days == null || days.equals("0") || days.equals("")){
                                     Toast.makeText(MyBookDetailInfoActivity.this, "你输入的天数为空哦～", Toast.LENGTH_SHORT).show();
                                 }else {
                                     Book_Read book_read = new Book_Read();
@@ -126,32 +121,38 @@ public class MyBookDetailInfoActivity extends BaseActivityPresenter<MyBookDetail
                                     book_read.setReadPages("0");
                                     book_read.setUsedDays(0);
 
+                                    //更新这本书的阅读情况
+                                    ContentValues values = new ContentValues();
+                                    values.put("readSituation", getResources().getString(R.string.reading));
+                                    DataSupport.update(Book_DB.class, values, book.getId());
+
                                     if (book_read.save()) {
                                         Toast.makeText(MyBookDetailInfoActivity.this, "添加成功！～", Toast.LENGTH_SHORT).show();
                                     } else {
                                         Toast.makeText(MyBookDetailInfoActivity.this, "添加失败！～", Toast.LENGTH_SHORT).show();
                                     }
+                                    readPlaneDialogFragment.dismiss();
                                 }
-                                readPlaneDialogFragment.dismiss();
+
                             }
 
                             @Override
                             public void onNaviClick() {
-                                Book_Read book_read = new Book_Read();
-                                book_read.setAuthor(book.getAuthor());
-                                book_read.setTitle(book.getTitle());
-                                book_read.setImage(book.getImage());
-                                book_read.setPages(book.getPages());
-                                book_read.setReadPages("0");
-                                book_read.setPlaneDays(0);
-                                book_read.setUsedDays(0);
-                                book_read.save();
-
-                                if (book_read.save()) {
-                                    Toast.makeText(MyBookDetailInfoActivity.this, "添加成功！～", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(MyBookDetailInfoActivity.this, "添加失败！～", Toast.LENGTH_SHORT).show();
-                                }
+//                                Book_Read book_read = new Book_Read();
+//                                book_read.setAuthor(book.getAuthor());
+//                                book_read.setTitle(book.getTitle());
+//                                book_read.setImage(book.getImage());
+//                                book_read.setPages(book.getPages());
+//                                book_read.setReadPages("0");
+//                                book_read.setPlaneDays(0);
+//                                book_read.setUsedDays(0);
+//                                book_read.save();
+//
+//                                if (book_read.save()) {
+//                                    Toast.makeText(MyBookDetailInfoActivity.this, "添加成功！～", Toast.LENGTH_SHORT).show();
+//                                } else {
+//                                    Toast.makeText(MyBookDetailInfoActivity.this, "添加失败！～", Toast.LENGTH_SHORT).show();
+//                                }
                                 readPlaneDialogFragment.dismiss();
                             }
                         });

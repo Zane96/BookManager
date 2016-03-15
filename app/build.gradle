@@ -19,7 +19,7 @@ android {
 
         defaultConfig {
             versionCode code
-            versionName "1.4.1"
+            versionName "1.5.1"
             minSdkVersion 15
             targetSdkVersion 23
         }
@@ -47,7 +47,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
     compile 'com.squareup.okhttp3:okhttp:3.0.1'
-    compile 'com.github.Kermit95:ExUtils:v1.0.1'
+    compile 'com.github.Kermit95:ExUtils:v1.0.2'
     compile 'com.github.bumptech.glide:glide:3.6.1'
     compile 'com.android.support:support-v4:23.1.1'
     compile 'com.google.dagger:dagger:2.0.2'

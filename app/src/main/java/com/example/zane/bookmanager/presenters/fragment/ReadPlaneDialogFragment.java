@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.zane.bookmanager.R;
+import com.kermit.exutils.utils.ExUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -27,10 +28,6 @@ public class ReadPlaneDialogFragment extends DialogFragment {
 
     @Bind(R.id.textview_readplane_planedays)
     EditText editText;
-    @Bind(R.id.button_readplane_navi)
-    Button buttonReadplaneNavi;
-    @Bind(R.id.button_readplane_posi)
-    Button buttonReadplanePosi;
 
     private OnPositiveClickListener listener;
 
@@ -48,62 +45,62 @@ public class ReadPlaneDialogFragment extends DialogFragment {
     public void onResume() {
         super.onResume();
         Window window = getDialog().getWindow();
-        window.setLayout(1000, 600);
+        window.setLayout((int)(ExUtils.getScreenWidth() * 0.8), (int)(ExUtils.getScreenHeight() * 0.35));
         window.setGravity(Gravity.CENTER);
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
-        View view = inflater.inflate(R.layout.dialogfragment_readplane_layout, null);
-        ButterKnife.bind(this, view);
-
-        buttonReadplaneNavi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onNaviClick();
-            }
-        });
-
-        buttonReadplanePosi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onClick(editText.getText().toString());
-            }
-        });
-
-        return view;
-    }
-
+//    @Nullable
 //    @Override
-//    public Dialog onCreateDialog(Bundle savedInstanceState) {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+//    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 //
-//        LayoutInflater inflater = getActivity().getLayoutInflater();
+//        getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
 //        View view = inflater.inflate(R.layout.dialogfragment_readplane_layout, null);
 //        ButterKnife.bind(this, view);
-//        //初始化控件
 //
-//
-//        builder.setView(view)
-//                        //添加button
-//                .setPositiveButton("确定"
-//                                          , new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        listener.onClick(editText.getText().toString());
-//                    }
-//                }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+//        buttonReadplaneNavi.setOnClickListener(new View.OnClickListener() {
 //            @Override
-//            public void onClick(DialogInterface dialog, int which) {
+//            public void onClick(View v) {
 //                listener.onNaviClick();
 //            }
 //        });
 //
-//        return builder.create();
+//        buttonReadplanePosi.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                listener.onClick(editText.getText().toString());
+//            }
+//        });
+//
+//        return view;
 //    }
+
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        View view = inflater.inflate(R.layout.dialogfragment_readplane_layout, null);
+        ButterKnife.bind(this, view);
+        //初始化控件
+
+
+        builder.setView(view)
+                        //添加button
+                .setPositiveButton("确定"
+                                          , new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        listener.onClick(editText.getText().toString());
+                    }
+                }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                listener.onNaviClick();
+            }
+        });
+
+        return builder.create();
+    }
 
     @Override
     public void onDestroyView() {

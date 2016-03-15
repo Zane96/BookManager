@@ -7,6 +7,7 @@ import java.util.List;
 
 import retrofit.http.Field;
 import retrofit.http.GET;
+import retrofit.http.Headers;
 import retrofit.http.Path;
 import retrofit.http.Query;
 import rx.Observable;
@@ -17,6 +18,7 @@ import rx.Observable;
 public interface DoubanRecommendBookService {
 
     //根据书籍作者名字获得相应的图书
+    @Headers("Cache-Control: public, max-age=3600")
     @GET("search")
     Observable<Book_Recom> getRecomBookInfo(@Query("q") String q, @Query("fields") String fields);
 

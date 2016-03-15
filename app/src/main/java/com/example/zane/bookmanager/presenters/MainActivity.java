@@ -30,6 +30,7 @@ import javax.inject.Inject;
 
 import retrofit.Retrofit;
 import rx.Observer;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -58,12 +59,6 @@ public class MainActivity extends BaseActivityPresenter<MainView> {
         v.init(this, myBookInfoFragment);
         initInject();
 
-//        myBookInfoFragment.setAddButtonListener(new MyBookInfoFragment.OnAddButtonListener() {
-//            @Override
-//            public void onAddButtonClick() {
-//                v.transToAddBookFragment();
-//            }
-//        });
     }
 
     public void initInject(){

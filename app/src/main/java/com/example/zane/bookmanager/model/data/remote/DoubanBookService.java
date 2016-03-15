@@ -5,6 +5,7 @@ import com.example.zane.bookmanager.model.bean.Book_DB;
 import com.example.zane.bookmanager.model.bean.Book_Recom;
 
 import retrofit.http.GET;
+import retrofit.http.Headers;
 import retrofit.http.Path;
 import rx.Observable;
 
@@ -14,6 +15,7 @@ import rx.Observable;
 public interface DoubanBookService {
 
     //根据书籍isbn号获取书籍信息
+    @Headers("Cache-Control: public, max-age=3600")
     @GET("{isbn}")
     Observable<Book> getBookInfo(@Path("isbn") String isbn);
 
