@@ -42,6 +42,7 @@ public class MyBookinfoViewHolder extends BaseListViewHolderImpl<Book_DB>{
     public void setData(Book_DB book) {
         Glide.with(MyApplication.getApplicationContext2())
                 .load(book.getImage())
+                .fitCenter()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .placeholder(R.mipmap.ic_launcher)
                 .error(R.mipmap.ic_launcher)
@@ -49,7 +50,8 @@ public class MyBookinfoViewHolder extends BaseListViewHolderImpl<Book_DB>{
 
         bookName.setText(book.getTitle());
         authorName.setText(book.getAuthor());
-        if (book.getReadSituation() != null){
+        //阅读情况不为空就设置阅读情况
+        if (book.getReadSituation() != null && book.getReadSituation() != " "){
             read_situation.setText(book.getReadSituation());
         }
         star.setText(book.getAverage());

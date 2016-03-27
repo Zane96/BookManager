@@ -1,7 +1,6 @@
 package com.example.zane.bookmanager.view;
 
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -10,6 +9,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.zane.bookmanager.R;
 import com.example.zane.bookmanager.app.MyApplication;
 import com.example.zane.bookmanager.model.bean.Book_Read;
+import com.example.zane.bookmanager.utils.TimeCaluUtils;
 import com.example.zane.easymvp.view.BaseListViewHolderImpl;
 
 /**
@@ -44,6 +44,6 @@ public class ReadPlaneViewHolder extends BaseListViewHolderImpl<Book_Read>{
                 .into(bookImage);
         bookName.setText(book_read.getTitle());
         readPages.setText(book_read.getReadPages());
-        readDays.setText(String.valueOf(book_read.getUsedDays()));
+        readDays.setText(String.valueOf(TimeCaluUtils.CaluDays(book_read.getFirstDay())));
     }
 }

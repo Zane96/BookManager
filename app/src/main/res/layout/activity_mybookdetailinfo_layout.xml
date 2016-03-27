@@ -336,6 +336,7 @@ android:fitsSystemWindows="true">
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/gray"
+                    android:lineSpacingExtra="4dp"
                     android:id="@+id/textview_author_intro_mybookdetail" />
 
             </LinearLayout>
@@ -373,6 +374,7 @@ android:fitsSystemWindows="true">
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/gray"
+                    android:lineSpacingExtra="4dp"
                     android:id="@+id/textview_book_intro_mybookdetail" />
 
             </LinearLayout>

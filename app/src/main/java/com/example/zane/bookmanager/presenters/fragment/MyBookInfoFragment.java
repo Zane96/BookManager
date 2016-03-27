@@ -1,11 +1,14 @@
 package com.example.zane.bookmanager.presenters.fragment;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -21,6 +24,7 @@ import com.example.zane.bookmanager.inject.component.DaggerFragmentComponent;
 import com.example.zane.bookmanager.inject.module.FragmentModule;
 import com.example.zane.bookmanager.model.bean.Book;
 import com.example.zane.bookmanager.model.bean.Book_DB;
+import com.example.zane.bookmanager.model.bean.Book_Read;
 import com.example.zane.bookmanager.model.data.DataManager;
 import com.example.zane.bookmanager.presenters.MainActivity;
 import com.example.zane.bookmanager.presenters.activity.MyBookDetailInfoActivity;
@@ -59,9 +63,7 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
     private List<Book_DB> myBooks;
     private MyBookInfoAdapter adapter;
     public static final String BOOK_DB = "BOOK_DB";
-   // private OnAddButtonListener scannerButtonListener;
     private boolean isSortByDate;
-    //1_all, 2_name, 3_author
     private int checkByWhitch = 1;
     private String bookName = "";
     private Observable<Integer> observable;
@@ -172,6 +174,7 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
                 adapter.notifyDataSetChanged();
             }
         });
+
         //item的点击事件的监听
         adapter.setOnItemClickListener(new MyBookInfoAdapter.OnItemClickListener() {
             @Override
@@ -183,8 +186,7 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
             }
 
             @Override
-            public void onLongClick(final int positon) {
-
+            public void onLongClick(final int positon, final View v) {
                 new MaterialDialog.Builder(getActivity())
                         .title(R.string.choose)
                         .items(new CharSequence[]{"删除"})
@@ -194,8 +196,8 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
                                                            , CharSequence charSequence) {
                                 switch (i) {
                                     case 0:
+                                        final List<Book_DB> books = DataSupport.where("isbn13 = ?", myBooks.get(positon).getIsbn13()).find(Book_DB.class);
                                         DataSupport.deleteAll(Book_DB.class, "isbn13 = ?", myBooks.get(positon).getIsbn13());
-                                        myBooks.remove(positon);
                                         adapter.clear();
                                         if (isSortByDate) {
                                             fetchDataByDate();
@@ -203,7 +205,45 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
                                             fetchDataByName();
                                         }
                                         adapter.notifyDataSetChanged();
-                                        Toast.makeText(getActivity(), "已删除", Toast.LENGTH_SHORT).show();
+
+                                        Snackbar.make(v, "少侠想要撤回删除吗？", Snackbar.LENGTH_LONG)
+                                                .setAction("撤回！", new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View v) {
+                                                        Book_DB book_db = new Book_DB();
+                                                        Book_DB book = books.get(0);
+                                                        Log.i(TAG, String.valueOf(book_db));
+                                                        book_db.setAuthor(book.getAuthor());
+                                                        book_db.setAuthor_intro(book.getAuthor_intro());
+                                                        book_db.setImage(book.getImage());
+                                                        book_db.setPages(book.getPages());
+                                                        book_db.setPrice(book.getPrice());
+                                                        book_db.setPubdate(book.getPubdate());
+                                                        book_db.setSubtitle(book.getSubtitle());
+                                                        book_db.setSummary(book.getSummary());
+                                                        book_db.setTitle(book.getTitle());
+                                                        book_db.setUrl(book.getUrl());
+                                                        book_db.setPublisher(book.getPublisher());
+                                                        book_db.setIsbn13(book.getIsbn13());
+                                                        book_db.setAverage(book.getAverage());
+                                                        book_db.setTag1(book.getTag1());
+                                                        book_db.setTag2(book.getTag2());
+                                                        book_db.setTag3(book.getTag3());
+                                                        book_db.setId(book.getId());
+                                                        if (book_db.save()) {
+                                                            Snackbar.make(v, "成功撤回！", Snackbar.LENGTH_SHORT).show();
+                                                        } else {
+                                                            Snackbar.make(v, "撤回失败！", Snackbar.LENGTH_SHORT).show();
+                                                        }
+                                                        adapter.clear();
+                                                        if (isSortByDate) {
+                                                            fetchDataByDate();
+                                                        } else {
+                                                            fetchDataByName();
+                                                        }
+                                                        adapter.notifyDataSetChanged();
+                                                    }
+                                                }).show();
                                         break;
                                 }
                             }
@@ -341,6 +381,7 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
             adapter.notifyDataSetChanged();
         }
     }
+
     public void checkBookByAuthor(final String book_name){
         ExUtils.Toast(myBooks.size()+" author");
         List<Book_DB> books = dataManager.checkBookByAuthor(myBooks, book_name);
@@ -385,6 +426,7 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
     //根据扫描时间降序排列
     public void fetchDataByDate(){
         myBooks = DataSupport.order("id desc").find(Book_DB.class);
+        Log.i(TAG, "haha " + String.valueOf(myBooks));
         adapter.setMyBooks(myBooks);
         isSortByDate = true;
     }

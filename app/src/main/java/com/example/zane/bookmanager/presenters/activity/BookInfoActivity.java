@@ -1,7 +1,5 @@
 package com.example.zane.bookmanager.presenters.activity;
 
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -11,7 +9,6 @@ import com.example.zane.bookmanager.R;
 import com.example.zane.bookmanager.app.MyApplication;
 import com.example.zane.bookmanager.inject.component.DaggerActivityComponent;
 import com.example.zane.bookmanager.inject.module.ActivityModule;
-import com.example.zane.bookmanager.inject.qualifier.ContextType;
 import com.example.zane.bookmanager.model.bean.Book;
 import com.example.zane.bookmanager.model.bean.Book_DB;
 import com.example.zane.bookmanager.presenters.MainActivity;
@@ -20,14 +17,11 @@ import com.example.zane.easymvp.presenter.BaseActivityPresenter;
 import com.kermit.exutils.utils.ExUtils;
 
 import org.litepal.crud.DataSupport;
-import org.litepal.tablemanager.Connector;
 
 import java.util.List;
 
 import rx.Observable;
-import rx.Subscriber;
 import rx.functions.Action1;
-import rx.functions.Func1;
 
 /**
  * Created by Zane on 16/2/14.
@@ -53,14 +47,7 @@ public class BookInfoActivity extends BaseActivityPresenter<BookInfoView>{
 
         toolbar = v.get(R.id.toolbar_bookinfo_activity);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+
         v.setupFabMenu();
         v.setupNestScrollView();
 

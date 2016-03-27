@@ -8,15 +8,44 @@ import java.io.Serializable;
  * Created by Zane on 16/3/8.
  * 阅读计划存储表
  */
-public class Book_Read extends DataSupport{
+public class Book_Read extends DataSupport implements Serializable{
 
+    private int id;
     private int planeDays;//计划天数
-    private int usedDays;//已经读过的天数
+    private long firstDay;//第一天制定阅读计划的日子
     private String pages;//总页数
     private String readPages;//已读页数
     private String title;
     private String image;
     private String author;
+    //是否读完，0表示还在读，1表示还在读
+    private int isReaded;
+    //在读或者想读
+    private String readSituation;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getIsReaded() {
+        return isReaded;
+    }
+
+    public void setIsReaded(int isReaded) {
+        this.isReaded = isReaded;
+    }
+
+    public String getReadSituation() {
+        return readSituation;
+    }
+
+    public void setReadSituation(String readSituation) {
+        this.readSituation = readSituation;
+    }
 
     public String getAuthor() {
         return author;
@@ -42,12 +71,12 @@ public class Book_Read extends DataSupport{
         this.planeDays = planeDays;
     }
 
-    public int getUsedDays() {
-        return usedDays;
+    public long getFirstDay() {
+        return firstDay;
     }
 
-    public void setUsedDays(int usedDays) {
-        this.usedDays = usedDays;
+    public void setFirstDay(long firstDay) {
+        this.firstDay = firstDay;
     }
 
     public String getPages() {

@@ -26,6 +26,7 @@ public class Book_DB extends DataSupport implements Serializable{
     private String tag1;
     private String tag2;
     private String tag3;
+    //“在读”or“想读”
     private String readSituation;
     private String average;
 

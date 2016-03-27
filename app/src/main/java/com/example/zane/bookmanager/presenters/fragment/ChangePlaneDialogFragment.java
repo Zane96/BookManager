@@ -9,27 +9,35 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.zane.bookmanager.R;
+import com.example.zane.bookmanager.model.bean.Book_Read;
 import com.kermit.exutils.utils.ExUtils;
+
+import org.litepal.crud.DataSupport;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by Zane on 16/3/10.
+ * Created by Zane on 16/3/23.
  */
-public class ReadPlaneDialogFragment extends DialogFragment {
+public class ChangePlaneDialogFragment extends DialogFragment {
 
+    @Bind(R.id.textview_planedays_changplane)
+    TextView textviewPlanedaysChangplane;
+    @Bind(R.id.edittext_newplane_changplane)
+    EditText edittextNewplaneChangplane;
 
-    @Bind(R.id.textview_readplane_planedays)
-    EditText editText;
-
-    private static final String TAG = "ReadPlaneDialogFragment";
+    public static final String BOOK_READ = "bookRead";
+    private static final String TAG = "ChangePlaneDialogFragment";
 
     private OnPositiveClickListener listener;
+    private Book_Read book_read;
 
     public interface OnPositiveClickListener {
         void onClick(String days);
@@ -41,31 +49,41 @@ public class ReadPlaneDialogFragment extends DialogFragment {
         this.listener = listener;
     }
 
+    public static ChangePlaneDialogFragment newInstance(Book_Read book_read){
+        ChangePlaneDialogFragment fragment = new ChangePlaneDialogFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(BOOK_READ, book_read);
+        fragment.setArguments(bundle);
+
+        return fragment;
+    }
+
     @Override
     public void onResume() {
         super.onResume();
         Window window = getDialog().getWindow();
-        window.setLayout((int)(ExUtils.getScreenWidth() * 0.8), (int)(ExUtils.getScreenHeight() * 0.35));
+        window.setLayout((int) (ExUtils.getScreenWidth() * 0.8), (int) (ExUtils.getScreenHeight() * 0.8));
         window.setGravity(Gravity.CENTER);
     }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        Log.i(TAG, String.valueOf(getActivity()));
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.dialogfragment_readplane_layout, null);
-        ButterKnife.bind(this, view);
-        //初始化控件
+        book_read = (Book_Read)getArguments().getSerializable(BOOK_READ);
 
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        View view = inflater.inflate(R.layout.dialogfragment_changplane_layout, null);
+        ButterKnife.bind(this, view);
+
+        textviewPlanedaysChangplane.setText(String.valueOf(book_read.getPlaneDays()) + "天");
 
         builder.setView(view)
                         //添加button
-                .setPositiveButton("确定"
+                .setPositiveButton("修改"
                                           , new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        listener.onClick(editText.getText().toString());
+                        listener.onClick(edittextNewplaneChangplane.getText().toString());
                     }
                 }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
             @Override
@@ -77,9 +95,11 @@ public class ReadPlaneDialogFragment extends DialogFragment {
         return builder.create();
     }
 
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
+
 }

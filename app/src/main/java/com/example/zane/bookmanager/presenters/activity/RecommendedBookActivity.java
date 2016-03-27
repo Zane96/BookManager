@@ -58,8 +58,8 @@ public class RecommendedBookActivity extends BaseActivityPresenter<RecommendedBo
                 .applicationComponent(app.getAppComponent())
                 .build();
         activityComponent.inject(this);
-
     }
+
     public ActivityComponent getActivityComponent(){
         return activityComponent;
     }

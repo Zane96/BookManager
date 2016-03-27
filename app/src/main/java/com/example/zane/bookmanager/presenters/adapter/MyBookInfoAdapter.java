@@ -46,7 +46,7 @@ public class MyBookInfoAdapter extends BaseListAdapterPresenter<Book_DB>{
 
     public interface OnItemClickListener{
         void onClick(int positon);
-        void onLongClick(int positon);
+        void onLongClick(int positon, View view);
     }
     public void setOnItemClickListener(OnItemClickListener listener){
         this.listener = listener;
@@ -113,7 +113,7 @@ public class MyBookInfoAdapter extends BaseListAdapterPresenter<Book_DB>{
             holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    listener.onLongClick(position-1);
+                    listener.onLongClick(position-1, v);
                     return false;
                 }
             });

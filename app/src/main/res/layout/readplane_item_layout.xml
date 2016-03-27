@@ -69,7 +69,7 @@
                 android:textSize="10sp"
                 android:text="555"
                 android:textColor="@color/gray"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="10dp"
                 android:id="@+id/textview_readplane_readpages"
                 />
 
@@ -94,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="10sp"
                 android:textColor="@color/gray"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="10dp"
                 android:text="55"
                 android:id="@+id/textview_readplane_readdays"
                 />
