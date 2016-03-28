@@ -1,18 +1,12 @@
 package com.example.zane.bookmanager.presenters.fragment;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
 import android.view.View;
 
-import com.example.zane.bookmanager.model.bean.Book_Read;
 import com.example.zane.bookmanager.presenters.adapter.FragmentViewPageAdapter;
 import com.example.zane.bookmanager.view.ReadPlaneView;
 import com.example.zane.easymvp.presenter.BaseFragmentPresenter;
-
-import org.litepal.crud.DataSupport;
-
-import java.util.List;
 
 /**
  * Created by Zane on 16/3/10.

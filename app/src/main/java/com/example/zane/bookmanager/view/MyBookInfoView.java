@@ -1,12 +1,14 @@
 package com.example.zane.bookmanager.view;
 
+import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.example.zane.bookmanager.R;
 import com.example.zane.bookmanager.presenters.adapter.MyBookInfoAdapter;
+import com.example.zane.bookmanager.presenters.fragment.MyBookInfoFragment;
 import com.example.zane.easymvp.view.BaseViewImpl;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
@@ -28,15 +30,18 @@ public class MyBookInfoView extends BaseViewImpl {
     FloatingActionButton fabAddMybookinfoFragment;
 
 
+
     @Override
     public int getRootViewId() {
         return R.layout.fragment_mybookinfo_layout;
     }
 
+
     public void initRecycleView(LinearLayoutManager manager, MyBookInfoAdapter adapter) {
         recyclerviewMybookinfoFragment.setLayoutManager(manager);
         recyclerviewMybookinfoFragment.setAdapter(adapter);
         recyclerviewMybookinfoFragment.setItemAnimator(new DefaultItemAnimator());
+
     }
 
     public void showFab() {
@@ -47,13 +52,12 @@ public class MyBookInfoView extends BaseViewImpl {
         fabmenuMybookinfoFragment.hideMenuButton(true);
     }
 
-    public void setFabMenu(){
+    public void setFabMenu() {
         fabmenuMybookinfoFragment.setClosedOnTouchOutside(true);
     }
 
-    public void closeMenu(){
+    public void closeMenu() {
         fabmenuMybookinfoFragment.close(true);
     }
-
 
 }

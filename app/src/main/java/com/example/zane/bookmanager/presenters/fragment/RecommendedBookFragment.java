@@ -2,34 +2,25 @@ package com.example.zane.bookmanager.presenters.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
-import android.text.TextUtils;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.zane.bookmanager.app.MyApplication;
 import com.example.zane.bookmanager.inject.component.DaggerFragmentComponent;
 import com.example.zane.bookmanager.inject.module.FragmentModule;
 import com.example.zane.bookmanager.model.bean.Book;
-import com.example.zane.bookmanager.model.bean.Book_DB;
 import com.example.zane.bookmanager.model.bean.Book_Recom;
 import com.example.zane.bookmanager.model.data.DataManager;
 import com.example.zane.bookmanager.presenters.MainActivity;
-import com.example.zane.bookmanager.presenters.activity.BookInfoActivity;
 import com.example.zane.bookmanager.presenters.activity.MyBookDetailInfoActivity;
 import com.example.zane.bookmanager.presenters.activity.RecommendedBookActivity;
 import com.example.zane.bookmanager.presenters.adapter.RecommendedBooklistAdapter;
 import com.example.zane.bookmanager.utils.JudgeNetError;
 import com.example.zane.bookmanager.view.RecommendedBookView;
 import com.example.zane.easymvp.presenter.BaseFragmentPresenter;
-import com.kermit.exutils.utils.ExUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import javax.inject.Inject;
 

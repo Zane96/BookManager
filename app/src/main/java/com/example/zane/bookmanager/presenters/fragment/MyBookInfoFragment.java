@@ -1,10 +1,10 @@
 package com.example.zane.bookmanager.presenters.fragment;
 
-import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -15,18 +15,16 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.zane.bookmanager.R;
 import com.example.zane.bookmanager.app.MyApplication;
 import com.example.zane.bookmanager.inject.component.DaggerFragmentComponent;
 import com.example.zane.bookmanager.inject.module.FragmentModule;
-import com.example.zane.bookmanager.model.bean.Book;
 import com.example.zane.bookmanager.model.bean.Book_DB;
-import com.example.zane.bookmanager.model.bean.Book_Read;
 import com.example.zane.bookmanager.model.data.DataManager;
 import com.example.zane.bookmanager.presenters.MainActivity;
+import com.example.zane.bookmanager.presenters.activity.AddIsbnActivity;
 import com.example.zane.bookmanager.presenters.activity.MyBookDetailInfoActivity;
 import com.example.zane.bookmanager.presenters.activity.ZxingScannerActivity;
 import com.example.zane.bookmanager.presenters.adapter.MyBookInfoAdapter;
@@ -37,20 +35,13 @@ import com.kermit.exutils.utils.ExUtils;
 
 import org.litepal.crud.DataSupport;
 
-import java.text.Collator;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 import javax.inject.Inject;
 
 import rx.Observable;
 import rx.Subscriber;
-import rx.functions.Action1;
-import rx.functions.Func1;
 
 /**
  * Created by Zane on 16/2/16.
@@ -70,6 +61,7 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
     private Subscriber<Integer> subscriber;
     private RecyclerView recyclerView;
 
+
     @Inject
     DataManager dataManager;
 
@@ -77,7 +69,6 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
         MyBookInfoFragment fragment = new MyBookInfoFragment();
         return fragment;
     }
-
 
     @Override
     public Class<MyBookInfoView> getRootViewClass() {
@@ -151,6 +142,7 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
                 }
             }
         });
+        //调用zxing的activity，扫描然后返回结果
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v1) {
@@ -159,6 +151,16 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
                                                                        , ZxingScannerActivity.class), MainActivity.requestCode_1);
             }
         }, R.id.fab_scanner_mybookinfo_fragment);
+        //调用手动添加isbn号，然后返回数据
+        v.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v2) {
+                v.closeMenu();
+                getActivity().startActivityForResult(new Intent(getActivity()
+                                                                       , AddIsbnActivity.class), MainActivity.requestCode_1);
+            }
+        }, R.id.fab_add_mybookinfo_fragment );
+
 
         //判断哪种排序方式的接口实现
         adapter.setOnSortBookListener(new MyBookInfoAdapter.OnSortBookListener() {
@@ -371,7 +373,6 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
     }
 
     public void checkBookByAll(final String book_name){
-        ExUtils.Toast(myBooks.size()+" all");
         List<Book_DB> books = dataManager.checkBookByAll(myBooks, book_name);
         if (books.size() != 0) {
             adapter.setMyBooks(books);

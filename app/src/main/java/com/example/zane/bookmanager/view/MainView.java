@@ -1,18 +1,17 @@
 package com.example.zane.bookmanager.view;
 
 
-import android.content.Context;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.example.zane.bookmanager.R;
-import com.example.zane.bookmanager.presenters.fragment.MainFragment;
 import com.example.zane.bookmanager.presenters.fragment.MyBookInfoFragment;
 import com.example.zane.bookmanager.presenters.fragment.ReadPlaneFragment;
 import com.example.zane.easymvp.view.BaseViewImpl;
@@ -30,6 +29,8 @@ public class MainView extends BaseViewImpl implements NavigationView.OnNavigatio
     NavigationView navView;
     @Bind(R.id.drawer_layout)
     DrawerLayout drawer;
+    @Bind(R.id.swiperefreshlayout_main_activity)
+    SwipeRefreshLayout swipeRefreshLayout;
 
     public AppCompatActivity context;
     private MyBookInfoFragment fragment;
@@ -59,13 +60,13 @@ public class MainView extends BaseViewImpl implements NavigationView.OnNavigatio
         navView.setNavigationItemSelectedListener(this);
     }
 
-    public void transToMyBookInfoFragment(){
+    public void transToMyBookInfoFragment() {
         FragmentTransaction transaction = context.getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_replace, fragment);
         transaction.commit();
     }
 
-    public void transToReadPlaneFragment(){
+    public void transToReadPlaneFragment() {
         FragmentTransaction transaction = context.getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_replace, readPlaneFragment);
         transaction.commit();
@@ -78,7 +79,7 @@ public class MainView extends BaseViewImpl implements NavigationView.OnNavigatio
 
         if (id == R.id.my_all_book) {
             transToMyBookInfoFragment();
-        } else if (id == R.id.my_reading_book){
+        } else if (id == R.id.my_reading_book) {
             transToReadPlaneFragment();
         }
 

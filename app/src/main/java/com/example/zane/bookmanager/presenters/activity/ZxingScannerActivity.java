@@ -1,16 +1,12 @@
 package com.example.zane.bookmanager.presenters.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.zane.bookmanager.app.MyApplication;
-import com.example.zane.bookmanager.inject.qualifier.ContextType;
 import com.example.zane.bookmanager.presenters.MainActivity;
 import com.google.zxing.Result;
-
-import javax.inject.Inject;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 

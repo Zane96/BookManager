@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_addisbn_activity"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:theme="@style/MyCustomToolBarStyle"
+        app:titleTextColor="@color/colorText"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/white"
+        android:textColor="@color/black"
+        android:textColorHint="@color/grey"
+        android:id="@+id/edittext_addisbn"
+        android:hint="输入书籍背后的ISBN号进行查询"
+        android:layout_margin="10dp"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="开始查询"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:id="@+id/button_addisbn"
+        />
+
+
+</LinearLayout>

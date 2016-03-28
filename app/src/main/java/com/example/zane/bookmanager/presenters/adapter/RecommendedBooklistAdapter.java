@@ -6,9 +6,6 @@ import android.view.ViewGroup;
 
 import com.example.zane.bookmanager.R;
 import com.example.zane.bookmanager.model.bean.Book;
-import com.example.zane.bookmanager.model.bean.Book_DB;
-import com.example.zane.bookmanager.model.bean.Book_Recom;
-import com.example.zane.bookmanager.view.MyBookinfoViewHolder;
 import com.example.zane.bookmanager.view.RecommendedBookViewHolder;
 import com.example.zane.easymvp.presenter.BaseListAdapterPresenter;
 import com.example.zane.easymvp.view.BaseListViewHolderImpl;

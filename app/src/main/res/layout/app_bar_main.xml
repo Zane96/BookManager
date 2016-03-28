@@ -29,13 +29,18 @@
 
 
     </android.support.design.widget.AppBarLayout>
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:id="@+id/swiperefreshlayout_main_activity"
+            >
 
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/fragment_replace"
-    />
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/fragment_replace"
+            />
+        </android.support.v4.widget.SwipeRefreshLayout>
 
     </LinearLayout>
 
