@@ -2,9 +2,12 @@ package com.example.zane.bookmanager.presenters.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.View;
 
+import com.example.zane.bookmanager.R;
 import com.example.zane.bookmanager.app.MyApplication;
 import com.example.zane.bookmanager.inject.component.DaggerFragmentComponent;
 import com.example.zane.bookmanager.inject.module.FragmentModule;
@@ -18,6 +21,7 @@ import com.example.zane.bookmanager.presenters.adapter.RecommendedBooklistAdapte
 import com.example.zane.bookmanager.utils.JudgeNetError;
 import com.example.zane.bookmanager.view.RecommendedBookView;
 import com.example.zane.easymvp.presenter.BaseFragmentPresenter;
+import com.kermit.exutils.utils.ExUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +50,7 @@ public class RecommendedBookFragment extends BaseFragmentPresenter<RecommendedBo
     private boolean isByTags;
     private String author_tag;
     private LinearLayoutManager linearLayoutManager;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Inject
     DataManager dataManager;
@@ -72,10 +77,13 @@ public class RecommendedBookFragment extends BaseFragmentPresenter<RecommendedBo
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //Log.i(TAG, "onViewCreated");
         init();
         initInject();
         v.setUpRecycleView(linearLayoutManager, adapter);
+        swipeRefreshLayout = v.get(R.id.swiperefreshlayout_recommend_fragment);
+        swipeRefreshLayout.setBackgroundResource(R.color.white);
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+        swipeRefreshLayout.setDistanceToTriggerSync(ExUtils.getScreenHeight());
 
         adapter.setOnItemClickListener(new RecommendedBooklistAdapter.OnItemClickListener() {
             @Override
@@ -97,19 +105,18 @@ public class RecommendedBookFragment extends BaseFragmentPresenter<RecommendedBo
         //https://api.douban.com/v2/book/search?q=周志明&fields=id,title,isbn13,author
         if (isByTags){
             String tags[] = author_tag.split("\\.");
-            //Log.i(TAG, author_tag+"hehe"+tags.length);
             for (int i = 0; i < tags.length; i++){
                 if (tags[i] != null){
-                    //Log.i(TAG, tags[i]+"haha");
+                    swipeRefreshLayout.setRefreshing(true);
+                    Log.i(TAG, String.valueOf(swipeRefreshLayout.isRefreshing()));
                     fetchData(tags[i]);
                 }
             }
         } else {
-            //Log.i(TAG, author_tag);
             String tags[] = author_tag.split("\\. ");
             for (int i = 0; i < tags.length; i++){
-                //Log.i(TAG, tags[i] + "haha");
                 if(tags[i] != null){
+                    swipeRefreshLayout.setRefreshing(true);
                     fetchData(tags[i]);
                 }
             }
@@ -143,38 +150,22 @@ public class RecommendedBookFragment extends BaseFragmentPresenter<RecommendedBo
                     public void onCompleted() {
                         adapter.setMyBooks(books_check);
                         adapter.notifyDataSetChanged();
+                        swipeRefreshLayout.setRefreshing(false);
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         JudgeNetError.judgeWhitchNetError(e);
+                        swipeRefreshLayout.setRefreshing(false);
                     }
 
                     @Override
                     public void onNext(Book book) {
                         books_check.add(book);
+                        swipeRefreshLayout.setRefreshing(false);
                     }
                 });
-//        dataManager.getRecomBoonInfo(param, "id,title,isbn13,author,images")
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribeOn(Schedulers.io())
-//                .subscribe(new Subscriber<Book_Recom>() {
-//                    @Override
-//                    public void onCompleted() {
-//                        adapter.setMyBooks(books);
-//                        adapter.notifyDataSetChanged();
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        ExUtils.Toast(String.valueOf(e));
-//                    }
-//
-//                    @Override
-//                    public void onNext(Book_Recom book) {
-//                        books.addAll(book.getBooks());
-//                    }
-//                });
+
     }
 
     public void init(){

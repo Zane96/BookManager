@@ -2,6 +2,7 @@ package com.example.zane.bookmanager.presenters.activity;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.example.zane.bookmanager.presenters.adapter.FragmentViewPageAdapter;
 import com.example.zane.bookmanager.presenters.fragment.RecommendedBookFragment;
 import com.example.zane.bookmanager.view.RecommendedBookActivityView;
 import com.example.zane.easymvp.presenter.BaseActivityPresenter;
+import com.kermit.exutils.utils.ExUtils;
 
 /**
  * Created by Zane on 16/2/23.
@@ -28,6 +30,7 @@ public class RecommendedBookActivity extends BaseActivityPresenter<RecommendedBo
     private Toolbar toolbar;
     private ActivityComponent activityComponent;
     public static final String TAG = "RecommendedBookActivity";
+
 
     @Override
     public Class<RecommendedBookActivityView> getRootViewClass() {

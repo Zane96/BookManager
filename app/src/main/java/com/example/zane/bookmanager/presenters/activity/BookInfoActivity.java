@@ -98,6 +98,7 @@ public class BookInfoActivity extends BaseActivityPresenter<BookInfoView>{
                         book_db.setPublisher(book.getPublisher());
                         book_db.setIsbn13(book.getIsbn13());
                         book_db.setAverage(book.getRating().getAverage());
+                        book_db.setReadSituation("");
                         if (book.getTags().size() >= 3) {
                             book_db.setTag1(book.getTags().get(0).getName());
                             book_db.setTag2(book.getTags().get(1).getName());

@@ -56,12 +56,6 @@ public class MainActivity extends BaseActivityPresenter<MainView> {
         swipeRefreshLayout.setBackgroundResource(R.color.white);
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
         swipeRefreshLayout.setDistanceToTriggerSync(ExUtils.getScreenHeight());
-//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                fetchData(isbn);
-//            }
-//        });
 
     }
 
