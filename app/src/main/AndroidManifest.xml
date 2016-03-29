@@ -41,6 +41,10 @@
                   android:configChanges="orientation"/>
         <activity android:name=".presenters.activity.AddIsbnActivity"
                   android:configChanges="orientation"/>
+        <activity android:name=".presenters.activity.AboutActivity"
+                  android:configChanges="orientation"/>
+
+        <meta-data android:value="1061b3f8eec2cda7f09cd0fb086b138d" android:name="BUG_HD_SDK_GENERAL_KEY" />
     </application>
 
 </manifest>

@@ -9,4 +9,6 @@
 
     <string name="reading">在读</string>
     <string name="want_read">想读</string>
+    <string name="readnme">https://github.com/Zane96/BookManager/blob/master/README.md</string>
+    <string name="bookmanager">https://github.com/Zane96/BookManager</string>
 </resources>

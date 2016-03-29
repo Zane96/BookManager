@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="美味书架">
+        <Preference
+            android:key="introduction"
+            android:title="应用介绍"/>
+        <Preference
+            android:key="currentVersion"
+            android:title="当前版本"/>
+        <Preference
+            android:key="versionCheck"
+            android:title="检查更新"/>
+        <Preference
+            android:key="share"
+            android:title="推荐给朋友"/>
+        <Preference
+            android:key="star"
+            android:summary="开源项目点个赞"
+            android:title="项目点赞"/>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="关于作者">
+        <Preference
+            android:key="blog"
+            android:summary="http://zane96.github.io"
+            android:title="个人博客"/>
+        <Preference
+            android:key="github"
+            android:summary="https://github.com/zane96"
+            android:title="我的Github"/>
+        <Preference
+            android:key="email"
+            android:summary="zanebot96@gmail.com"
+            android:title="邮箱"/>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="版权">
+        <Preference
+            android:summary="豆瓣公司API"
+            android:title="数据来源"/>
+        <Preference
+            android:summary="图片素材来源于网络，版权属于原作者"
+            android:title="素材来源"/>
+    </PreferenceCategory>
+</PreferenceScreen>

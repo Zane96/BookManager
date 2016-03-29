@@ -10,6 +10,8 @@ import com.kermit.exutils.utils.ExUtils;
 
 import org.litepal.LitePalApplication;
 
+import im.fir.sdk.FIR;
+
 /**
  * Created by Zane on 16/2/14.
  */
@@ -24,6 +26,7 @@ public class MyApplication extends Application{
         application = this;
         ExUtils.initialize(this);
         LitePalApplication.initialize(this);
+        FIR.init(this);
     }
 
     public ApplicationComponent getAppComponent(){

@@ -19,7 +19,7 @@ android {
 
         defaultConfig {
             versionCode code
-            versionName "1.6.0"
+            versionName "1.7.0"
             minSdkVersion 15
             targetSdkVersion 23
         }
@@ -66,5 +66,6 @@ dependencies {
         transitive = true
     }
     compile 'com.github.clans:fab:1.6.2'
+    compile 'im.fir:fir-sdk:latest.integration@aar'
 }
 

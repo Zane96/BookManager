@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.zane.bookmanager.R;
@@ -40,6 +41,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import im.fir.sdk.FIR;
+import im.fir.sdk.VersionCheckCallback;
 import rx.Observable;
 import rx.Subscriber;
 
@@ -142,6 +145,7 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
                 }
             }
         });
+
         //调用zxing的activity，扫描然后返回结果
         v.setOnClickListener(new View.OnClickListener() {
             @Override
