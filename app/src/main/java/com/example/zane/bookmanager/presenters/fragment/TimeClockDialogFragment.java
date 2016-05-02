@@ -23,8 +23,10 @@ import butterknife.ButterKnife;
  * Created by Zane on 16/3/25.
  */
 public class TimeClockDialogFragment extends DialogFragment {
+
     public static final String BOOK_READ = "bookRead";
     private static final String TAG = "TimeClockDialogFragment";
+
     @Bind(R.id.textview_readedpages_timeclock)
     TextView textviewReadedpagesTimeclock;
     @Bind(R.id.textview_progress_timeclock)
@@ -57,9 +59,9 @@ public class TimeClockDialogFragment extends DialogFragment {
     @Override
     public void onResume() {
         super.onResume();
-        Window window = getDialog().getWindow();
-        window.setLayout((int) (ExUtils.getScreenWidth() * 0.8), (int) (ExUtils.getScreenHeight() * 0.8));
-        window.setGravity(Gravity.CENTER);
+//        Window window = getDialog().getWindow();
+//        window.setLayout((int) (ExUtils.getScreenWidth() * 0.8), (int) (ExUtils.getScreenHeight() * 0.8));
+//        window.setGravity(Gravity.CENTER);
     }
 
     @Override

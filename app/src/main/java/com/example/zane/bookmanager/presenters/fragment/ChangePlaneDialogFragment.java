@@ -57,9 +57,9 @@ public class ChangePlaneDialogFragment extends DialogFragment {
     @Override
     public void onResume() {
         super.onResume();
-        Window window = getDialog().getWindow();
-        window.setLayout((int) (ExUtils.getScreenWidth() * 0.8), (int) (ExUtils.getScreenHeight() * 0.8));
-        window.setGravity(Gravity.CENTER);
+//        Window window = getDialog().getWindow();
+//        window.setLayout((int) (ExUtils.getScreenWidth() * 0.8), (int) (ExUtils.getScreenHeight() * 0.8));
+//        window.setGravity(Gravity.CENTER);
     }
 
     @Override

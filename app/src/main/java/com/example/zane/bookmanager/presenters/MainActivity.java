@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.example.zane.bookmanager.R;
@@ -24,6 +25,7 @@ import com.kermit.exutils.utils.ExUtils;
 import javax.inject.Inject;
 
 import rx.Observer;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -76,7 +78,7 @@ public class MainActivity extends BaseActivityPresenter<MainView> {
         datamanager.getBookInfo(isbn)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<Book>() {
+                .subscribe(new Subscriber<Book>() {
                     @Override
                     public void onCompleted() {
                         swipeRefreshLayout.setRefreshing(false);
@@ -119,6 +121,11 @@ public class MainActivity extends BaseActivityPresenter<MainView> {
 
     @Override
     public void inDestory() {
+    }
+
+    @Override
+    public AppCompatActivity getContext() {
+        return this;
     }
 
     @Override

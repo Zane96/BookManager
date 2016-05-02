@@ -45,6 +45,11 @@ public class MainView extends BaseViewImpl implements NavigationView.OnNavigatio
         return R.layout.activity_main;
     }
 
+    @Override
+    public void setActivityContext(AppCompatActivity appCompatActivity) {
+
+    }
+
     public void init(AppCompatActivity context, MyBookInfoFragment fragment) {
 
         this.context = context;
@@ -98,17 +103,6 @@ public class MainView extends BaseViewImpl implements NavigationView.OnNavigatio
             context.startActivity(new Intent(context, AboutActivity.class));
         }
 
-//        } else if (id == R.id.nav_gallery) {
-//
-//        } else if (id == R.id.nav_slideshow) {
-//
-//        } else if (id == R.id.nav_manage) {
-//
-//        } else if (id == R.id.nav_share) {
-//
-//        } else if (id == R.id.nav_send) {
-//
-//        }
 
         drawer.closeDrawer(GravityCompat.START);
         return true;

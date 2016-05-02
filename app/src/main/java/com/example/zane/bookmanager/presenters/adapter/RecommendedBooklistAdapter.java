@@ -50,8 +50,12 @@ public class RecommendedBooklistAdapter extends BaseListAdapterPresenter<Book>{
         return new RecommendedBookViewHolder(viewGroup, R.layout.mybookinfo_item_layout);
     }
 
+
     @Override
-    public void onBindViewHolder(BaseListViewHolderImpl holder, final int position) {
+    public void OnBindViewHloder(BaseListViewHolderImpl holder, int i) {
+
+        final int position = i;
+
         holder.setData(myBooks.get(position));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -73,5 +77,15 @@ public class RecommendedBooklistAdapter extends BaseListAdapterPresenter<Book>{
     @Override
     public int getItemCount() {
         return myBooks.size();
+    }
+
+    @Override
+    public int setHeadNum() {
+        return 0;
+    }
+
+    @Override
+    public int setFootNum() {
+        return 0;
     }
 }

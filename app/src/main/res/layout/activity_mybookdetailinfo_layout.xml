@@ -29,7 +29,7 @@ android:fitsSystemWindows="true">
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"
+            android:scaleType="fitXY"
             android:fitsSystemWindows="true"
             app:layout_collapseMode="parallax"
             android:id="@+id/image_mybookdetailinfo_activity"
@@ -402,6 +402,34 @@ android:fitsSystemWindows="true">
         fab:menu_colorRipple="#62B2FF"
         app:menu_openDirection="up"
         >
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_checkRecommendedBook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_menu_send"
+            style="@style/MenuButtonsSmall_Blue"
+            fab:fab_size="mini"
+            fab:fab_label="查看相关书籍" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_addto_read"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_menu_send"
+            style="@style/MenuButtonsSmall_Blue"
+            fab:fab_size="mini"
+            fab:fab_label="添加到阅读计划" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_addwant_to_read"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_menu_send"
+            style="@style/MenuButtonsSmall_Blue"
+            fab:fab_size="mini"
+            fab:fab_label="添加到想读书单" />
+
     </com.github.clans.fab.FloatingActionMenu>
 
 

@@ -1,6 +1,7 @@
 package com.example.zane.bookmanager.presenters.activity;
 
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
@@ -45,13 +46,10 @@ public class BookInfoActivity extends BaseActivityPresenter<BookInfoView>{
         book = (Book)getIntent().getSerializableExtra(MainActivity.BOOK_INFO);
         initInject();
 
-        toolbar = v.get(R.id.toolbar_bookinfo_activity);
-        setSupportActionBar(toolbar);
-
         v.setupFabMenu();
         v.setupNestScrollView();
 
-        v.setupToolbar(book.getImages().getLarge());
+        v.setupToolbar(book.getTitle(), book.getImages().getLarge());
         v.setBookInfo(book.getTitle(), book.getAuthor(), book.getPublisher(), book.getPrice());
 
         //存储图书数据到数据库,并且保证现在是从mainactivity跳转而来
@@ -143,5 +141,10 @@ public class BookInfoActivity extends BaseActivityPresenter<BookInfoView>{
     @Override
     public void inDestory() {
 
+    }
+
+    @Override
+    public AppCompatActivity getContext() {
+        return this;
     }
 }

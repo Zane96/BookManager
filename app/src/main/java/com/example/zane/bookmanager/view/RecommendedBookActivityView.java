@@ -4,6 +4,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.example.zane.bookmanager.R;
@@ -23,6 +24,11 @@ public class RecommendedBookActivityView extends BaseViewImpl {
     TabLayout tablayoutRecommendedactivity;
     @Bind(R.id.fab)
     FloatingActionButton fab;
+
+    @Override
+    public void setActivityContext(AppCompatActivity appCompatActivity) {
+
+    }
 
 
     @Override

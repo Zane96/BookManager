@@ -4,6 +4,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 
 import com.example.zane.bookmanager.R;
 import com.example.zane.bookmanager.presenters.adapter.FragmentViewPageAdapter;
@@ -24,6 +25,11 @@ public class ReadPlaneView extends BaseViewImpl {
     @Override
     public int getRootViewId() {
         return R.layout.fragment_readplane_layout;
+    }
+
+    @Override
+    public void setActivityContext(AppCompatActivity appCompatActivity) {
+
     }
 
     public void init(FragmentViewPageAdapter adapter){

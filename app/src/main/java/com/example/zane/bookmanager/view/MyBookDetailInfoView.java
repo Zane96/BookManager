@@ -3,6 +3,7 @@ package com.example.zane.bookmanager.view;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
@@ -52,10 +53,17 @@ public class MyBookDetailInfoView extends BaseViewImpl {
     FloatingActionMenu fabmenuDownMybookinfoFragment;
     @Bind(R.id.nestedscrollview_mydetailbook)
     NestedScrollView nestedscrollviewMydetailbook;
+    @Bind(R.id.fab_checkRecommendedBook)
+    FloatingActionButton fabCheckRecommendedBook;
+    @Bind(R.id.fab_addto_read)
+    FloatingActionButton fabAddtoRead;
+    @Bind(R.id.fab_addwant_to_read)
+    FloatingActionButton fabAddwantToRead;
 
     private FloatingActionButton fab_checkRecommendedBook;
     private FloatingActionButton fab_addto_read;
     private FloatingActionButton fab_addwant_to_read;
+    private AppCompatActivity context;
 
 
     @Override
@@ -63,17 +71,33 @@ public class MyBookDetailInfoView extends BaseViewImpl {
         return R.layout.activity_mybookdetailinfo_layout;
     }
 
+    @Override
+    public void setActivityContext(AppCompatActivity appCompatActivity) {
+        context = appCompatActivity;
+    }
+
 
     public void setupToolbar(String url, String title) {
+
         collapsingToolbar.setTitle(title);
+        collapsingToolbar.setExpandedTitleColor(context.getResources().getColor(android.R.color.transparent));
         Glide.with(MyApplication.getApplicationContext2())
                 .load(url)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .placeholder(R.mipmap.ic_launcher)
-                .fitCenter()
+                .animate(R.anim.image_in)
+                .override(ExUtils.getScreenWidth(), ExUtils.dip2px(256))
                 .error(R.mipmap.ic_launcher)
                 .into(imageviewMybookdetailActivity);
+        context.setSupportActionBar(toolbarMybookdetailinfoActivity);
+        context.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        toolbarMybookdetailinfoActivity.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.finish();
+            }
+        });
     }
 
     public void setTextviewBooknameMybookdetail(String bookName) {
@@ -109,31 +133,39 @@ public class MyBookDetailInfoView extends BaseViewImpl {
     }
 
     public void setupMyBookInfoFabMenuFromMainActivity() {
-        fabmenuDownMybookinfoFragment.setClosedOnTouchOutside(true);
-        fab_checkRecommendedBook = new FloatingActionButton(MyApplication.getApplicationContext2());
-        fab_checkRecommendedBook.setButtonSize(FloatingActionButton.SIZE_MINI);
-        fab_checkRecommendedBook.setLabelText("查看相关书籍");
-        fab_checkRecommendedBook.setImageResource(R.drawable.ic_menu_send);
-        fabmenuDownMybookinfoFragment.addMenuButton(fab_checkRecommendedBook);
-
-        fab_addto_read = new FloatingActionButton(MyApplication.getApplicationContext2());
-        fab_addto_read.setButtonSize(FloatingActionButton.SIZE_MINI);
-        fab_addto_read.setLabelText("添加到阅读计划");
-        fab_addto_read.setImageResource(R.drawable.ic_menu_send);
-        fabmenuDownMybookinfoFragment.addMenuButton(fab_addto_read);
-
-        fab_addwant_to_read = new FloatingActionButton(MyApplication.getApplicationContext2());
-        fab_addwant_to_read.setButtonSize(FloatingActionButton.SIZE_MINI);
-        fab_addwant_to_read.setLabelText("添加到想读书单");
-        fab_addwant_to_read.setImageResource(R.drawable.ic_menu_send);
-        fabmenuDownMybookinfoFragment.addMenuButton(fab_addwant_to_read);
+//        fabmenuDownMybookinfoFragment.setClosedOnTouchOutside(true);
+//        fab_checkRecommendedBook = new FloatingActionButton(MyApplication.getApplicationContext2());
+//        fab_checkRecommendedBook.setButtonSize(FloatingActionButton.SIZE_MINI);
+//        fab_checkRecommendedBook.setLabelText("查看相关书籍");
+//        fab_checkRecommendedBook.setColorNormal(R.color.fab_normal);
+//        fab_checkRecommendedBook.setColorPressed(R.color.fab_press);
+//        fab_checkRecommendedBook.setColorRipple(R.color.fab_ripple);
+//        fab_checkRecommendedBook.setImageResource(R.drawable.ic_menu_send);
+//        fabmenuDownMybookinfoFragment.addMenuButton(fab_checkRecommendedBook);
+//
+//        fab_addto_read = new FloatingActionButton(MyApplication.getApplicationContext2());
+//        fab_addto_read.setButtonSize(FloatingActionButton.SIZE_MINI);
+//        fab_addto_read.setLabelText("添加到阅读计划");
+//        fab_addto_read.setColorNormalResId(R.color.fab_press);
+//
+//        fab_addto_read.setImageResource(R.drawable.ic_menu_send);
+//        fabmenuDownMybookinfoFragment.addMenuButton(fab_addto_read);
+//
+//        fab_addwant_to_read = new FloatingActionButton(MyApplication.getApplicationContext2());
+//        fab_addwant_to_read.setButtonSize(FloatingActionButton.SIZE_MINI);
+//        fab_addwant_to_read.setLabelText("添加到想读书单");
+//        fab_addwant_to_read.setColorNormal(R.color.fab_normal);
+//        fab_addwant_to_read.setColorPressed(R.color.fab_press);
+//        fab_addwant_to_read.setColorRipple(R.color.fab_ripple);
+//        fab_addwant_to_read.setImageResource(R.drawable.ic_menu_send);
+//        fabmenuDownMybookinfoFragment.addMenuButton(fab_addwant_to_read);
     }
 
     public void clodeMenu() {
         fabmenuDownMybookinfoFragment.close(true);
     }
 
-    public void setupNestScrollView(){
+    public void setupNestScrollView() {
         nestedscrollviewMydetailbook.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
@@ -148,12 +180,14 @@ public class MyBookDetailInfoView extends BaseViewImpl {
 
     //好像如果java代码添加控件的话，只能通过函数把控件暴露出去，不能用view的set方法！这点怎么解决？
     public FloatingActionButton getFab_checkRecommendedBook() {
-        return fab_checkRecommendedBook;
+        return fabCheckRecommendedBook;
     }
-    public FloatingActionButton getFab_addto_read(){
-        return fab_addto_read;
+
+    public FloatingActionButton getFab_addto_read() {
+        return fabAddtoRead;
     }
-    public FloatingActionButton getFab_addwant_to_read(){
-        return fab_addwant_to_read;
+
+    public FloatingActionButton getFab_addwant_to_read() {
+        return fabAddwantToRead;
     }
 }

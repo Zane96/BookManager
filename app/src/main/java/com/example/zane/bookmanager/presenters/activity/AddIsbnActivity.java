@@ -2,6 +2,7 @@ package com.example.zane.bookmanager.presenters.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
@@ -26,7 +27,7 @@ public class AddIsbnActivity extends BaseActivityPresenter<AddIsbnView>{
     @Override
     public void inCreat(Bundle bundle) {
 
-        v.setupToolbar(this);
+        v.setupToolbar();
 
         v.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,5 +47,10 @@ public class AddIsbnActivity extends BaseActivityPresenter<AddIsbnView>{
     @Override
     public void inDestory() {
 
+    }
+
+    @Override
+    public AppCompatActivity getContext() {
+        return this;
     }
 }

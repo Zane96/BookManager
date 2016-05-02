@@ -1,5 +1,6 @@
 package com.example.zane.bookmanager.view;
 
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 
 import com.example.zane.bookmanager.R;
@@ -19,6 +20,11 @@ public class ReadPlaneViewPageView extends BaseViewImpl {
     @Override
     public int getRootViewId() {
         return R.layout.viewpager_readplane_layout;
+    }
+
+    @Override
+    public void setActivityContext(AppCompatActivity appCompatActivity) {
+
     }
 
     public void setupRecycleView(ReadPlaneAdapter adapter, RecyclerView.LayoutManager manager){

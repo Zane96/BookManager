@@ -3,13 +3,15 @@ package com.example.zane.bookmanager.model.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.zane.easymvp.base.IListModel;
+
 import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Zane on 16/2/14.
  */
-public class Book implements Serializable{
+public class Book implements Serializable, IListModel{
 
     /**
      * max : 10
@@ -263,6 +265,11 @@ public class Book implements Serializable{
 
     public List<?> getTranslator() {
         return translator;
+    }
+
+    @Override
+    public int getModelViewType() {
+        return 0;
     }
 
     public static class RatingEntity implements Serializable{

@@ -59,25 +59,29 @@ public class ReadPlaneAdapter extends BaseListAdapterPresenter<Book_Read>{
         }
     }
 
+
     @Override
-    public void onBindViewHolder(BaseListViewHolderImpl holder, final int position) {
+    public void OnBindViewHloder(BaseListViewHolderImpl holder, int i) {
+
+        final int position = i;
+
         if (isReadingBook){
-                holder.setData(books.get(position));
+            holder.setData(books.get(position));
 
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        listener.OnClick(position, v);
-                    }
-                });
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.OnClick(position, v);
+                }
+            });
 
-                holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View v) {
-                        listener.OnLongClick(position, v);
-                        return true;
-                    }
-                });
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    listener.OnLongClick(position, v);
+                    return true;
+                }
+            });
 
         } else{
             holder.setData(wantReadBooks.get(position));
@@ -91,5 +95,15 @@ public class ReadPlaneAdapter extends BaseListAdapterPresenter<Book_Read>{
         } else {
             return wantReadBooks.size();
         }
+    }
+
+    @Override
+    public int setHeadNum() {
+        return 0;
+    }
+
+    @Override
+    public int setFootNum() {
+        return 0;
     }
 }

@@ -1,9 +1,12 @@
 package com.example.zane.bookmanager.view;
 
+import android.content.Context;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,6 +17,7 @@ import com.example.zane.bookmanager.app.MyApplication;
 import com.example.zane.easymvp.view.BaseViewImpl;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+import com.kermit.exutils.utils.ExUtils;
 
 import java.util.List;
 
@@ -49,20 +53,40 @@ public class BookInfoView extends BaseViewImpl {
     @Bind(R.id.nestedscrollview_bookinfo)
     NestedScrollView nestedscrollviewBookinfo;
 
+    private AppCompatActivity context;
+
 
     @Override
     public int getRootViewId() {
         return R.layout.activity_bookinfo_layout;
     }
 
-    public void setupToolbar(String url) {
+    @Override
+    public void setActivityContext(AppCompatActivity appCompatActivity) {
+        context = appCompatActivity;
+    }
+
+    public void setupToolbar(String title, String url) {
+        collapsingToolbarBookinfo.setTitle(title);
+        collapsingToolbarBookinfo.setExpandedTitleColor(context.getResources().getColor(R.color.transparent));
         Glide.with(MyApplication.getApplicationContext2())
                 .load(url)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .placeholder(R.mipmap.ic_launcher)
-                .fitCenter()
+                .animate(R.anim.image_in)
+                .override(ExUtils.getScreenWidth(), ExUtils.dip2px(256))
                 .error(R.mipmap.ic_launcher)
                 .into(imageviewBookinfoActivity);
+
+        context.setSupportActionBar(toolbarBookinfoActivity);
+        context.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        toolbarBookinfoActivity.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.finish();
+            }
+        });
     }
 
     public void setBookInfo(String bookName, List<String> authorName, String publishName, String price) {

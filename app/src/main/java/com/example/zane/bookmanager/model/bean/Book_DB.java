@@ -1,5 +1,7 @@
 package com.example.zane.bookmanager.model.bean;
 
+import com.example.zane.easymvp.base.IListModel;
+
 import org.litepal.crud.DataSupport;
 
 import java.io.Serializable;
@@ -8,7 +10,7 @@ import java.io.Serializable;
  * Created by Zane on 16/2/17.
  * litepal数据库操作中表对应的对象数据模型
  */
-public class Book_DB extends DataSupport implements Serializable{
+public class Book_DB extends DataSupport implements Serializable, IListModel{
 
     private int id;
     private String subtitle;
@@ -172,5 +174,10 @@ public class Book_DB extends DataSupport implements Serializable{
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    @Override
+    public int getModelViewType() {
+        return 0;
     }
 }

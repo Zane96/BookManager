@@ -4,6 +4,10 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="fab_normal">#1565c0</color>
+    <color name="fab_press">#2272CD</color>
+    <color name="fab_ripple">#62B2FF</color>
+    <color name="transparent">#00000000</color>
     <color name="colorText">#FFFF</color>
     <color name="white">#ffffff</color><!--白色 -->
     <color name="ivory">#fffff0</color><!--象牙色 -->

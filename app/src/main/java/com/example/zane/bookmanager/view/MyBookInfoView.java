@@ -2,6 +2,7 @@ package com.example.zane.bookmanager.view;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,6 +35,11 @@ public class MyBookInfoView extends BaseViewImpl {
     @Override
     public int getRootViewId() {
         return R.layout.fragment_mybookinfo_layout;
+    }
+
+    @Override
+    public void setActivityContext(AppCompatActivity appCompatActivity) {
+
     }
 
 

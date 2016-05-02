@@ -1,6 +1,7 @@
 package com.example.zane.bookmanager.presenters.activity;
 
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.example.zane.bookmanager.presenters.fragment.AboutFragment;
 import com.example.zane.bookmanager.view.AboutActivityView;
@@ -26,5 +27,10 @@ public class AboutActivity extends BaseActivityPresenter<AboutActivityView>{
     @Override
     public void inDestory() {
 
+    }
+
+    @Override
+    public AppCompatActivity getContext() {
+        return this;
     }
 }

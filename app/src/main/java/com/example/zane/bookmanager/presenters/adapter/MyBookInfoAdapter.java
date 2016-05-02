@@ -99,8 +99,9 @@ public class MyBookInfoAdapter extends BaseListAdapterPresenter<Book_DB>{
         }
     }
 
+
     @Override
-    public void onBindViewHolder(final BaseListViewHolderImpl holder, final int position) {
+    public void OnBindViewHloder(BaseListViewHolderImpl holder, final int position) {
         if (position != 0){
             holder.setData(myBooks.get(position-1));
 
@@ -166,5 +167,15 @@ public class MyBookInfoAdapter extends BaseListAdapterPresenter<Book_DB>{
     @Override
     public int getItemCount() {
         return myBooks.size() + 1;
+    }
+
+    @Override
+    public int setHeadNum() {
+        return 0;
+    }
+
+    @Override
+    public int setFootNum() {
+        return 0;
     }
 }

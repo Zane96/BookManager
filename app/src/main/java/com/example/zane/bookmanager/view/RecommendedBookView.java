@@ -1,5 +1,6 @@
 package com.example.zane.bookmanager.view;
 
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -17,6 +18,11 @@ public class RecommendedBookView extends BaseViewImpl {
 
     @Bind(R.id.recyclerview_recommendedbook_fragment)
     RecyclerView recyclerviewRecommendedbookFragment;
+
+    @Override
+    public void setActivityContext(AppCompatActivity appCompatActivity) {
+
+    }
 
     @Override
     public int getRootViewId() {

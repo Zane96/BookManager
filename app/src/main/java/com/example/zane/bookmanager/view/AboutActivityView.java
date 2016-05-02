@@ -26,6 +26,11 @@ public class AboutActivityView extends BaseViewImpl {
         return R.layout.activity_about_layout;
     }
 
+    @Override
+    public void setActivityContext(AppCompatActivity appCompatActivity) {
+
+    }
+
     public void transToAboutFragment(AboutFragment fragment, AppCompatActivity activity){
         activity.getFragmentManager().beginTransaction().replace(R.id.fragment_replace_about, fragment).commit();
     }

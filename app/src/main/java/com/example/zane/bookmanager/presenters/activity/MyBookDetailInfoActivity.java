@@ -3,10 +3,10 @@ package com.example.zane.bookmanager.presenters.activity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
-
 import com.example.zane.bookmanager.R;
 import com.example.zane.bookmanager.app.MyApplication;
 import com.example.zane.bookmanager.inject.component.DaggerActivityComponent;
@@ -35,7 +35,6 @@ import javax.inject.Inject;
  */
 public class MyBookDetailInfoActivity extends BaseActivityPresenter<MyBookDetailInfoView>{
 
-    private Toolbar toolbar;
     public static final String BOOKDB = "BOOKDB";
     private String whereToComeFrom;
     private static final String TAG = "MyBookDetailInfoActivity";
@@ -52,9 +51,6 @@ public class MyBookDetailInfoActivity extends BaseActivityPresenter<MyBookDetail
     public void inCreat(Bundle bundle) {
         initInject();
         whereToComeFrom = getIntent().getStringExtra(MainActivity.TAG);
-        toolbar = v.get(R.id.toolbar_mybookdetailinfo_activity);
-        setSupportActionBar(toolbar);
-        toolbar.setTitle("");
         v.setupNestScrollView();
 
         //判断是从哪一个activity跳转而来，因为我需要代码复用。！
@@ -210,5 +206,10 @@ public class MyBookDetailInfoActivity extends BaseActivityPresenter<MyBookDetail
     @Override
     public void inDestory() {
 
+    }
+
+    @Override
+    public AppCompatActivity getContext() {
+        return this;
     }
 }

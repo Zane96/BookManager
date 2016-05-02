@@ -1,5 +1,6 @@
 package com.example.zane.bookmanager.view;
 
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -44,6 +45,7 @@ public class MyBookinfoViewHolder extends BaseListViewHolderImpl<Book_DB>{
                 .load(book.getImage())
                 .fitCenter()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .animate(R.anim.image_in)
                 .placeholder(R.mipmap.ic_launcher)
                 .error(R.mipmap.ic_launcher)
                 .into(bookImage);

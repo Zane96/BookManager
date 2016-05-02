@@ -5,6 +5,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -45,6 +46,7 @@ import im.fir.sdk.FIR;
 import im.fir.sdk.VersionCheckCallback;
 import rx.Observable;
 import rx.Subscriber;
+import rx.functions.Action1;
 
 /**
  * Created by Zane on 16/2/16.
@@ -79,11 +81,18 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
     }
 
     @Override
+    public AppCompatActivity getContext() {
+        return null;
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         fetchDataByDate();
         adapter.notifyDataSetChanged();
     }
+
+
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {

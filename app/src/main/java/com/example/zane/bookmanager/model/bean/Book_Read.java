@@ -1,5 +1,7 @@
 package com.example.zane.bookmanager.model.bean;
 
+import com.example.zane.easymvp.base.IListModel;
+
 import org.litepal.crud.DataSupport;
 
 import java.io.Serializable;
@@ -8,7 +10,7 @@ import java.io.Serializable;
  * Created by Zane on 16/3/8.
  * 阅读计划存储表
  */
-public class Book_Read extends DataSupport implements Serializable{
+public class Book_Read extends DataSupport implements Serializable,IListModel{
 
     private int id;
     private int planeDays;//计划天数
@@ -101,5 +103,10 @@ public class Book_Read extends DataSupport implements Serializable{
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    @Override
+    public int getModelViewType() {
+        return 0;
     }
 }

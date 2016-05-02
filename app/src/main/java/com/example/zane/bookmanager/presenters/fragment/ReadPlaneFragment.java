@@ -1,6 +1,7 @@
 package com.example.zane.bookmanager.presenters.fragment;
 
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
@@ -19,6 +20,11 @@ public class ReadPlaneFragment extends BaseFragmentPresenter<ReadPlaneView>{
     @Override
     public Class<ReadPlaneView> getRootViewClass() {
         return ReadPlaneView.class;
+    }
+
+    @Override
+    public AppCompatActivity getContext() {
+        return null;
     }
 
     @Override

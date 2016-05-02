@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.util.Log;
 import android.view.View;
@@ -53,6 +54,11 @@ public class ReadPlaneViewPageFragment extends BaseFragmentPresenter<ReadPlaneVi
     @Override
     public Class<ReadPlaneViewPageView> getRootViewClass() {
         return ReadPlaneViewPageView.class;
+    }
+
+    @Override
+    public AppCompatActivity getContext() {
+        return (AppCompatActivity)getActivity();
     }
 
     @Override

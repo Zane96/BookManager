@@ -26,25 +26,32 @@ public class AddIsbnView extends BaseViewImpl {
     @Bind(R.id.toolbar_addisbn_activity)
     Toolbar toolbarAddisbnActivity;
 
+    private AppCompatActivity context;
+
     @Override
     public int getRootViewId() {
         return R.layout.activity_addisbn_layout;
+    }
+
+    @Override
+    public void setActivityContext(AppCompatActivity appCompatActivity) {
+        context = appCompatActivity;
     }
 
     public String getIsbn() {
         return edittextAddisbn.getText().toString();
     }
 
-    public void setupToolbar(final AppCompatActivity activity){
+    public void setupToolbar(){
         toolbarAddisbnActivity.setTitle("");
-        activity.setSupportActionBar(toolbarAddisbnActivity);
-        activity.getSupportActionBar().setHomeButtonEnabled(true);
-        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        context.setSupportActionBar(toolbarAddisbnActivity);
+        context.getSupportActionBar().setHomeButtonEnabled(true);
+        context.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         toolbarAddisbnActivity.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activity.finish();
+                context.finish();
             }
         });
     }
