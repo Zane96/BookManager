@@ -1,7 +1,5 @@
 package com.example.zane.bookmanager.model.bean;
 
-import com.kermit.exutils.utils.ExUtils;
-
 /**
  * Created by Zane on 16/3/29.
  * 对应于fir项目的项目信息

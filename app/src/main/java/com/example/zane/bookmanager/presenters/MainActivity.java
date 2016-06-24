@@ -6,6 +6,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MotionEvent;
 import android.widget.Toast;
 
 import com.example.zane.bookmanager.R;
@@ -69,6 +70,15 @@ public class MainActivity extends BaseActivityPresenter<MainView> {
                 .build();
         activityComponent.inject(this);
     }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_MOVE){
+            v.interTouchEvent(event);
+        }
+        return true;
+    }
+
 
     public ActivityComponent getActivityComponent(){
         return activityComponent;

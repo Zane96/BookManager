@@ -11,10 +11,11 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.widget.LinearLayout;
 
 import com.example.zane.bookmanager.R;
 import com.example.zane.bookmanager.presenters.activity.AboutActivity;
-import com.example.zane.bookmanager.presenters.fragment.AboutFragment;
 import com.example.zane.bookmanager.presenters.fragment.MyBookInfoFragment;
 import com.example.zane.bookmanager.presenters.fragment.ReadPlaneFragment;
 import com.example.zane.easymvp.view.BaseViewImpl;
@@ -85,6 +86,10 @@ public class MainView extends BaseViewImpl implements NavigationView.OnNavigatio
         transaction.commit();
     }
 
+    public void interTouchEvent(MotionEvent event){
+        drawer.onInterceptTouchEvent(event);
+    }
+
 //    public void transToAboutFragment(){
 //        //这里我们不需要兼容低版本了
 //        context.getFragmentManager().beginTransaction().replace(R.id.fragment_replace, aboutFragment).commit();
@@ -99,7 +104,7 @@ public class MainView extends BaseViewImpl implements NavigationView.OnNavigatio
             transToMyBookInfoFragment();
         } else if (id == R.id.my_reading_book) {
             transToReadPlaneFragment();
-        } else if (id == R.id.nav_about){
+        } else if (id == R.id.nav_about) {
             context.startActivity(new Intent(context, AboutActivity.class));
         }
 

@@ -6,7 +6,7 @@ import com.example.zane.bookmanager.inject.component.ApplicationComponent;
 import com.example.zane.bookmanager.inject.component.DaggerApplicationComponent;
 import com.example.zane.bookmanager.inject.module.ApplicationModule;
 import com.example.zane.bookmanager.inject.module.DoubanBookModule;
-import com.kermit.exutils.utils.ExUtils;
+import com.jude.utils.JUtils;
 
 import org.litepal.LitePalApplication;
 
@@ -24,7 +24,7 @@ public class MyApplication extends Application{
     public void onCreate() {
         super.onCreate();
         application = this;
-        ExUtils.initialize(this);
+        JUtils.initialize(this);
         LitePalApplication.initialize(this);
         FIR.init(this);
     }

@@ -15,7 +15,8 @@ import com.example.zane.bookmanager.model.bean.Book_DB;
 import com.example.zane.bookmanager.presenters.MainActivity;
 import com.example.zane.bookmanager.view.BookInfoView;
 import com.example.zane.easymvp.presenter.BaseActivityPresenter;
-import com.kermit.exutils.utils.ExUtils;
+import com.jude.utils.JUtils;
+
 
 import org.litepal.crud.DataSupport;
 
@@ -116,10 +117,10 @@ public class BookInfoActivity extends BaseActivityPresenter<BookInfoView>{
                         }
 
                         if (book_db.save()) {
-                            ExUtils.Toast("保存成功!");
+                            JUtils.Toast("保存成功!");
                             finish();
                         } else {
-                            ExUtils.Toast("保存失败!");
+                            JUtils.Toast("保存失败!");
                             finish();
                         }
                     }

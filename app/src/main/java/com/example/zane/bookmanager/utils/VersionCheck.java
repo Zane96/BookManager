@@ -12,7 +12,7 @@ import android.view.View;
 
 import com.example.zane.bookmanager.app.MyApplication;
 import com.example.zane.bookmanager.model.bean.VersionApi;
-import com.kermit.exutils.utils.ExUtils;
+import com.jude.utils.JUtils;
 
 /**
  * Created by Zane on 16/3/29.
@@ -44,7 +44,7 @@ public class VersionCheck {
     public static void checkVersion(VersionApi versionApi, Context context, View view){
         //分别获得当前的版本号，版本名和fir目前最新的版本名和版本号
         int currentVersionCode = getVersionCode(MyApplication.getApplicationContext2());
-        String currentVersionName = ExUtils.getVersionName(MyApplication.getApplicationContext2());
+        String currentVersionName = JUtils.getAppVersionName();
         int firVersionCode = Integer.parseInt(versionApi.getVersion());
         String firVersionName = versionApi.getVersionShort();
 

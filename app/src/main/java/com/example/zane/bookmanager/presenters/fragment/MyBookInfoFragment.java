@@ -75,6 +75,7 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
         return fragment;
     }
 
+
     @Override
     public Class<MyBookInfoView> getRootViewClass() {
         return MyBookInfoView.class;
@@ -103,6 +104,8 @@ public class MyBookInfoFragment extends BaseFragmentPresenter<MyBookInfoView>{
         adapter.notifyDataSetChanged();
         v.initRecycleView(manager, adapter);
         v.setFabMenu();
+
+
 
         //搜索功能的接口实现
         adapter.setOnCheckBookListener(new MyBookInfoAdapter.OnCheckBookListener() {

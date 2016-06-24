@@ -13,7 +13,6 @@ import android.view.Window;
 import android.widget.EditText;
 
 import com.example.zane.bookmanager.R;
-import com.kermit.exutils.utils.ExUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

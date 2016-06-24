@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.example.zane.bookmanager.R;
 import com.example.zane.bookmanager.model.bean.Book_Read;
-import com.kermit.exutils.utils.ExUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -57,9 +56,6 @@ public class ChangePlaneDialogFragment extends DialogFragment {
     @Override
     public void onResume() {
         super.onResume();
-//        Window window = getDialog().getWindow();
-//        window.setLayout((int) (ExUtils.getScreenWidth() * 0.8), (int) (ExUtils.getScreenHeight() * 0.8));
-//        window.setGravity(Gravity.CENTER);
     }
 
     @Override
